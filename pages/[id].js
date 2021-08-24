@@ -61,7 +61,6 @@ const Leaflet = ({ records, step2Options }) => {
   const { query } = useRouter();
   const { id } = query;
 
-  const [clickable, setClickable] = useState(false);
   const [step1Selected, setStep1Selected] = useState([]);
   const [step2Selected, setStep2Selected] = useState(null);
 
@@ -114,7 +113,12 @@ const Leaflet = ({ records, step2Options }) => {
                 <Card
                   details={item.fields}
                   clickable
-                  handleCardClick={() => setStep2Selected(item.fields.Title)}
+                  handleCardClick={() => {
+                    setStep2Selected(item.fields.Title);
+                    setStep((oldStep) => {
+                      return oldStep + 1;
+                    });
+                  }}
                 />
               ))}
           </div>
