@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import Head from "next/head";
 import { useState } from "react";
 import Checkboxes from "../components/Checkboxes";
 import orgAPI from "./api/orgs";
@@ -68,22 +69,56 @@ const Leaflet = ({ records, step2Options }) => {
 
   console.log({ step1Selected });
   return (
-    <Pagination step={step} setStep={setStep}>
-      {id}
-      <Checkboxes
-        options={step1}
-        selected={step1Selected}
-        updateSelected={(id, value) =>
-          setStep1Selected((prevSelec) => {
-            if (!value) {
-              return prevSelec.filter((item) => item !== id);
-            } else {
-              return [...prevSelec, id];
-            }
-          })
-        }
-      />
-    </Pagination>
+    <>
+      <Head>
+        <link rel="icon" href="/favicon.png" />
+        <title>Sheffield - Worried about Money?</title>
+        <meta
+          name="description"
+          content="Worrying About Money? Advice and support is available in Sheffield if you’re struggling to make ends meet"
+        />
+        <meta
+          property="og:url"
+          content="https://findfood.camden.gov.uk/camden-food"
+        />
+        <meta property="og:title" content="Sheffield - Worried about Money?" />
+        <meta
+          property="og:description"
+          content="Worrying About Money? Advice and support is available in Sheffield if you’re struggling to make ends meet"
+        />
+        <meta
+          property="twitter:title"
+          content="Sheffield - Worried about Money?"
+        />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:image"
+          content="https://i.ibb.co/HDff9SP/find-food-twitter.png"
+        />
+        <meta
+          property="og:image"
+          content="https://i.ibb.co/HDff9SP/find-food-twitter.png"
+        />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+      </Head>
+      <Pagination step={step} setStep={setStep}>
+        {id}
+        <Checkboxes
+          options={step1}
+          selected={step1Selected}
+          updateSelected={(id, value) =>
+            setStep1Selected((prevSelec) => {
+              if (!value) {
+                return prevSelec.filter((item) => item !== id);
+              } else {
+                return [...prevSelec, id];
+              }
+            })
+          }
+        />
+      </Pagination>
+    </>
   );
 };
 
