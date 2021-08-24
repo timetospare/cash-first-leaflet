@@ -3,6 +3,7 @@ import { useState } from "react";
 import Checkboxes from "../components/Checkboxes";
 import orgAPI from "./api/orgs";
 import { Pagination } from "../components/Pagination";
+import step2API from "./api/step2";
 
 const step1 = [
   {
@@ -54,7 +55,7 @@ const step1 = [
   },
 ];
 
-const Leaflet = ({ records }) => {
+const Leaflet = ({ records, step2Options }) => {
   const { query } = useRouter();
   const { id } = query;
 
@@ -63,6 +64,7 @@ const Leaflet = ({ records }) => {
   const [step, setStep] = useState(1);
 
   console.log({ records });
+  console.log({ step2Options });
 
   console.log({ step1Selected });
   return (
@@ -86,11 +88,15 @@ const Leaflet = ({ records }) => {
 };
 
 export async function getStaticProps() {
-  //   const records = await orgAPI("view");
+  const promises = [orgAPI("view"), step2API("view")];
+
+  const [records, step2Options] = await Promise.allSettled(promises);
 
   return {
     props: {
-      records: {},
+      records: records.status === "fulfilled" ? records.value : [],
+      step2Options:
+        step2Options.status === "fulfilled" ? step2Options.value : [],
     },
     // Next.js will attempt to re-generate the page:
     // - When a request comes in
