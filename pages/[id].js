@@ -62,6 +62,8 @@ const Leaflet = ({ records, step2Options }) => {
 
   const [step1Selected, setStep1Selected] = useState([]);
 
+  const [step, setStep] = useState(1);
+
   console.log({ records });
   console.log({ step2Options });
 
@@ -100,7 +102,7 @@ const Leaflet = ({ records, step2Options }) => {
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
       </Head>
-      <Pagination>
+      <Pagination step={step} setStep={setStep}>
         {id}
         <Checkboxes
           options={step1}
