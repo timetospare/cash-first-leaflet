@@ -1,7 +1,9 @@
 import { useRouter } from "next/router";
+import Head from "next/head";
 import { useState } from "react";
 import Checkboxes from "../components/Checkboxes";
 import orgAPI from "./api/orgs";
+import { Pagination } from "../components/Pagination";
 import step2API from "./api/step2";
 import generalAPI from "./api/general"
 
@@ -61,33 +63,123 @@ const Leaflet = ({ records, step2Options, general }) => {
 
   const [step1Selected, setStep1Selected] = useState([]);
 
+  const [step, setStep] = useState(1);
+
   console.log({ records });
   console.log({ step2Options });
   console.log({general})
 
   console.log({ step1Selected });
+
+  const showContent = () => {
+    switch (step) {
+      case 1:
+        return (
+          <div>
+            <h1 className="text-2xl font-bold">What's the problem?</h1>
+            <h2 className="text-xl font-light">
+              Select 1 or more options to see what local support is available
+            </h2>
+            <Checkboxes
+              options={step1}
+              selected={step1Selected}
+              updateSelected={(id, value) =>
+                setStep1Selected((prevSelec) => {
+                  if (!value) {
+                    return prevSelec.filter((item) => item !== id);
+                  } else {
+                    return [...prevSelec, id];
+                  }
+                })
+              }
+            />
+          </div>
+        );
+      case 2:
+        return (
+          <div>
+            <h1 className="text-2xl font-bold">What are some options?</h1>
+            <h2 className="text-xl font-light">
+              Click on an option to see who to contact for advice and support on
+              these options
+            </h2>
+            {step2Options
+              .filter((item) =>
+                item.fields?.Option1?.some((key) =>
+                  step1Selected?.includes(key)
+                )
+              )
+              .map((item) => (
+                <div>{item.fields?.Title}</div>
+              ))}
+          </div>
+        );
+      case 3:
+        return (
+          <div>
+            <h1 className="text-2xl font-bold">Where can I get help?</h1>
+            <h2 className="text-xl font-light">
+              Each of these services offer free and confidential advice on the
+              options highlighted above
+            </h2>
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
-    <div>
-      {id}
-      <Checkboxes
-        options={step1}
-        selected={step1Selected}
-        updateSelected={(id, value) =>
-          setStep1Selected((prevSelec) => {
-            if (!value) {
-              return prevSelec.filter((item) => item !== id);
-            } else {
-              return [...prevSelec, id];
-            }
-          })
-        }
-      />
-    </div>
+    <>
+      <Head>
+        <link rel="icon" href="/favicon.png" />
+        <title>Sheffield - Worried about Money?</title>
+        <meta
+          name="description"
+          content="Worrying About Money? Advice and support is available in Sheffield if you’re struggling to make ends meet"
+        />
+        <meta
+          property="og:url"
+          content="https://findfood.camden.gov.uk/camden-food"
+        />
+        <meta property="og:title" content="Sheffield - Worried about Money?" />
+        <meta
+          property="og:description"
+          content="Worrying About Money? Advice and support is available in Sheffield if you’re struggling to make ends meet"
+        />
+        <meta
+          property="twitter:title"
+          content="Sheffield - Worried about Money?"
+        />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:image"
+          content="https://i.ibb.co/HDff9SP/find-food-twitter.png"
+        />
+        <meta
+          property="og:image"
+          content="https://i.ibb.co/HDff9SP/find-food-twitter.png"
+        />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+      </Head>
+      <Pagination step={step} setStep={setStep}>
+        <>
+          {showContent()}
+          <footer className="w-full flex flex-row justify-center text-sm text-gray-700 p-2">
+            <div>
+              Powered by <span className="font-pacifico">Time to Spare</span>
+            </div>
+          </footer>
+        </>
+      </Pagination>
+    </>
   );
 };
 
-export async function getStaticProps() {
-  const promises = [orgAPI("view"), step2API("view")];
+export async function getStaticProps(context) {
+  const view = context.params.id;
+  const promises = [orgAPI(view), step2API(view)];
 
   const [records, step2Options, general] = await Promise.allSettled(promises);
 
