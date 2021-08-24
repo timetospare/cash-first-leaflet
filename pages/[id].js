@@ -5,7 +5,7 @@ import Checkboxes from "../components/Checkboxes";
 import orgAPI from "./api/orgs";
 import { Pagination } from "../components/Pagination";
 import step2API from "./api/step2";
-import generalAPI from "./api/general"
+import generalAPI from "./api/general";
 
 const step1 = [
   {
@@ -67,7 +67,11 @@ const Leaflet = ({ records, step2Options, general }) => {
 
   console.log({ records });
   console.log({ step2Options });
-  console.log({general})
+  console.log({ general });
+
+  const logos = general[0].fields.Logos.split(',')
+
+  console.log({logos})
 
   console.log({ step1Selected });
 
@@ -166,9 +170,17 @@ const Leaflet = ({ records, step2Options, general }) => {
       <Pagination step={step} setStep={setStep} step1Selected={step1Selected}>
         <>
           {showContent()}
-          <footer className="w-full flex flex-row justify-center text-sm text-gray-700 p-2">
+          <footer className="w-full flex flex-col justify-center items-center text-sm text-gray-700 p-2">
             <div>
               Powered by <span className="font-pacifico">Time to Spare</span>
+            </div>
+            <div>
+              <h3 className="mb-2">Supported by</h3>
+              <div className="flex flex-wrap justify-center items-center">
+                {logos.map((src, i) => {
+                  return <img className="w-20 h-16 object-contain" src={src} key={i}/>;
+                })}
+              </div>
             </div>
           </footer>
         </>
@@ -183,15 +195,14 @@ export async function getStaticProps(context) {
 
   const [records, step2Options, general] = await Promise.allSettled(promises);
 
-  console.log("status", general)
+  console.log("status", general);
 
   return {
     props: {
       records: records.status === "fulfilled" ? records.value : [],
       step2Options:
         step2Options.status === "fulfilled" ? step2Options.value : [],
-        general:
-        general.status === "fulfilled" ? general.value : [],
+      general: general.status === "fulfilled" ? general.value : [],
     },
     // Next.js will attempt to re-generate the page:
     // - When a request comes in
