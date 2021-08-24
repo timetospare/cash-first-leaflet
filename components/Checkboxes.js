@@ -1,7 +1,7 @@
 const Checkboxes = ({ options, selected, updateSelected }) => {
   return (
     <form>
-      <fieldset className="space-y-8 -mt-4">
+      <fieldset className="space-y-8 ">
         <legend className="sr-only">Step 1 Options</legend>
         {options?.map((opt) => (
           <div key={opt.id} className="relative flex items-start">

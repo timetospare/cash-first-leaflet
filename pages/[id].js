@@ -1,12 +1,12 @@
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Checkboxes from "../components/Checkboxes";
 import orgAPI from "./api/orgs";
 import Card from "../components/Card";
 import { Pagination } from "../components/Pagination";
 import step2API from "./api/step2";
-import generalAPI from "./api/general"
+import generalAPI from "./api/general";
 
 const step1 = [
   {
@@ -69,16 +69,24 @@ const Leaflet = ({ records, step2Options, general }) => {
 
   console.log({ records });
   console.log({ step2Options });
-  console.log({general})
+  console.log({ general });
 
   console.log({ step1Selected });
+
+  console.log({ step2Selected });
+
+  console.log({ step });
+
+  console.log(
+    records.filter((item) => item.fields?.Option2?.includes(step2Selected))
+  );
 
   const showContent = () => {
     switch (step) {
       case 1:
         return (
           <div className="px-4">
-            <h1 className="text-2xl font-bold">What's the problem?</h1>
+            <h1 className="text-2xl font-medium">What's the problem?</h1>
             <h2 className="text-xl font-light">
               Select 1 or more options to see what local support is available
             </h2>
@@ -100,43 +108,47 @@ const Leaflet = ({ records, step2Options, general }) => {
       case 2:
         return (
           <div className="px-4">
-            <h1 className="text-2xl font-bold">What are some options?</h1>
+            <h1 className="text-2xl font-medium">What are some options?</h1>
             <h2 className="text-xl font-light">
               Click on an option to see who to contact for advice and support on
               these options
             </h2>
-            {step2Options
-              .filter((item) =>
-                item.fields?.Option1?.some((key) =>
-                  step1Selected?.includes(key)
+            <div className="space-y-4 mt-4">
+              {step2Options
+                .filter((item) =>
+                  item.fields?.Option1?.some((key) =>
+                    step1Selected?.includes(key)
+                  )
                 )
-              )
-              .map((item) => (
-                <Card
-                  details={item.fields}
-                  clickable
-                  handleCardClick={() => {
-                    setStep2Selected(item.fields.Title);
-                    setStep((oldStep) => {
-                      return oldStep + 1;
-                    });
-                  }}
-                />
-              ))}
+                .map((item) => (
+                  <Card
+                    details={item.fields}
+                    clickable
+                    handleCardClick={() => {
+                      setStep2Selected(item.fields.Title);
+                      setStep((oldStep) => {
+                        return oldStep + 1;
+                      });
+                    }}
+                  />
+                ))}
+            </div>
           </div>
         );
       case 3:
         return (
-          <div>
-            <h1 className="text-2xl font-bold">Where can I get help?</h1>
+          <div className="px-4">
+            <h1 className="text-2xl font-medium">Where can I get help?</h1>
             <h2 className="text-xl font-light">
               Each of these services offer free and confidential advice
             </h2>
-            {records
-              .filter((item) => item.fields?.Option2?.includes(step2Selected))
-              .map((item) => (
-                <Card details={item.fields} />
-              ))}
+            <div className="space-y-4 mt-4">
+              {records
+                .filter((item) => item.fields?.Option2?.includes(step2Selected))
+                .map((item) => (
+                  <Card details={item.fields} />
+                ))}
+            </div>
           </div>
         );
       default:
@@ -178,12 +190,35 @@ const Leaflet = ({ records, step2Options, general }) => {
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
       </Head>
-      <Pagination step={step} setStep={setStep} step1Selected={step1Selected}>
+      <Pagination
+        header={
+          <>
+            <h1 className="text-3xl font-medium pt-4 pb-2">
+              Worrying About Money?
+            </h1>
+            <h2 className="text-lg font-light  mb-2">
+              Advice and support is available in Sheffield if you’re struggling
+              to make ends meet
+            </h2>
+          </>
+        }
+        step={step}
+        setStep={setStep}
+        step1Selected={step1Selected}
+      >
         <>
           {showContent()}
-          <footer className="w-full flex flex-row justify-center text-sm text-gray-700 p-2">
+          <footer className="w-full flex flex-row justify-center text-sm text-gray-700 p-2 mt-8">
             <div>
-              Powered by <span className="font-pacifico">Time to Spare</span>
+              Powered by{" "}
+              <a
+                href="https://timetospare.com"
+                rel="noopener noreferrer"
+                target="_blank"
+                className="font-pacifico"
+              >
+                Time to Spare
+              </a>
             </div>
           </footer>
         </>
@@ -198,15 +233,14 @@ export async function getStaticProps(context) {
 
   const [records, step2Options, general] = await Promise.allSettled(promises);
 
-  console.log("status", general)
+  console.log("status", general);
 
   return {
     props: {
       records: records.status === "fulfilled" ? records.value : [],
       step2Options:
         step2Options.status === "fulfilled" ? step2Options.value : [],
-        general:
-        general.status === "fulfilled" ? general.value : [],
+      general: general.status === "fulfilled" ? general.value : [],
     },
     // Next.js will attempt to re-generate the page:
     // - When a request comes in

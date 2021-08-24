@@ -25,7 +25,7 @@ export const Layout = ({ children }) => {
           About
         </a>
       </header>
-      <main className="w-full h-full overflow-scroll">{children}</main>
+      <main className="w-full h-full overflow-auto">{children}</main>
     </div>
   );
 };
