@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import Airtable from "airtable";
 
-export default orgAPI = async (req, res) => {
+const orgAPI = async (view) => {
   Airtable.configure({
     apiKey: process.env.AIRTABLE_API_KEY,
     endpointUrl: "https://api.airtable.com",
@@ -9,11 +9,15 @@ export default orgAPI = async (req, res) => {
   const airtable = new Airtable();
   const base = airtable.base("appEay9REblCErAGJ");
 
-  const data = await base.select({
-    // Selecting the first 3 records in Grid view:
-    maxRecords: 3,
-    view: "Grid view",
-  });
+  const data = await base("Table 1")
+    .select({
+      // Selecting the first 3 records in Grid view:
+      maxRecords: 3,
+      view: "Grid view",
+    })
+    .all();
 
-  res.status(200).json(data);
+  return data.map((record) => record._rawJson);
 };
+
+export default orgAPI;
