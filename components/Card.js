@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
-const Card = ({ details, clickable }) => {
+const Card = ({ details, clickable, handleCardClick }) => {
   console.log({ details });
 
   const websitesArr = details.Links.split(",");
@@ -57,12 +57,15 @@ const Card = ({ details, clickable }) => {
   );
 
   return clickable ? (
-    <Link href="" className="w-full max-w-m">
+    <Link onClick={handleCardClick} className="w-full max-w-m">
       <a className="bg-green-400 border-gray-400 rounded-lg overflow-hidden pb-4 border flex flex-col justify-between bg-white shadow-lg">
         {contents}
       </a>
       <div className="px-4">
-        <button className="border-gray-500 border-2 bg-none text-gray-500 text-md rounded-full px-4 py-2">
+        <button
+          className="border-gray-500 border-2 bg-none text-gray-500 text-md rounded-full px-4 py-2"
+          onClick={handleCardClick}
+        >
           Read More
         </button>
       </div>
