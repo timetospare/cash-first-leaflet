@@ -1,10 +1,8 @@
 import { useState, useEffect, useContext } from "react";
 
-export const Pagination = ({ children }) => {
-  const [step, setStep] = useState(1);
-
+export const Pagination = ({ children, step, setStep }) => {
   return (
-    <div className="h-full flex flex-col justify-between p-4">
+    <div className="h-full flex flex-col justify-between p-4 overflow-scroll">
       <div className="flex flex-row justify-center items-center text-white space-x-6">
         <div
           className={`${
@@ -57,7 +55,7 @@ export const Pagination = ({ children }) => {
         </div>
       </div>
       {children}
-      <div className="self-end">
+      <div className="fixed bottom-24 right-0 mr-4">
         {step !== 1 && (
           <button
             type="button"

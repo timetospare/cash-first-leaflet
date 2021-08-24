@@ -60,11 +60,13 @@ const Leaflet = ({ records }) => {
 
   const [step1Selected, setStep1Selected] = useState([]);
 
+  const [step, setStep] = useState(1);
+
   console.log({ records });
 
   console.log({ step1Selected });
   return (
-    <Pagination>
+    <Pagination step={step} setStep={setStep}>
       {id}
       <Checkboxes
         options={step1}
