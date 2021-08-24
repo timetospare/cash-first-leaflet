@@ -11,7 +11,6 @@ export const Pagination = ({
 
   useEffect(() => {
     if (parentEl.current) {
-      console.log(parentEl.current);
       parentEl.current.scrollTop = 0;
     }
   }, [step]);

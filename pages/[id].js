@@ -7,79 +7,19 @@ import Card from "../components/Card";
 import { Pagination } from "../components/Pagination";
 import step2API from "./api/step2";
 import generalAPI from "./api/general";
-
-const step1 = [
-  {
-    id: "No Money",
-    title: "I suddenly have no money",
-    details: [
-      "Lost job / reduced hours",
-      "Lost money / unexpected expense",
-      "Disaster (e.g. flood or fire)",
-      "Relationship breakdown",
-      "Money stopped (e.g. failed a medical)",
-    ],
-  },
-  {
-    id: "Sanctioned",
-    title: "I have been sanctioned",
-  },
-  {
-    id: "Awaiting Benefit",
-    title: "I am waiting on a benefit payment / decision",
-    details: [
-      "Made a new claim for benefit",
-      "Benefit payment is delayed",
-      "Waiting for a benefit decision",
-    ],
-  },
-  {
-    id: "Money Doesn't Stretch",
-    title: "My money doesn’t stretch far enough",
-    details: [
-      "Deciding between food / fuel / mobile credit",
-      "Low income or zero hours contract",
-      "Statutory Sick Pay too low to cover costs",
-      "Facing redundancy",
-      "Not sure if eligible for support",
-      "Change of circumstance (e.g. new baby / bereavement / illness / left partner)",
-    ],
-  },
-  {
-    id: "Debt",
-    title: "I have debt",
-    details: [
-      "Rent or Council Tax arrears",
-      "Gas or electricity",
-      "Payday loans",
-      "Owe friends and family",
-      "Benefit repayments",
-    ],
-  },
-];
+import step1 from "../models/step1";
 
 const Leaflet = ({ records, step2Options, general }) => {
-  const { query } = useRouter();
+  const { query, locale } = useRouter();
   const { id } = query;
+
+  const details =
+    general?.find((item) => item?.fields?.Location === id)?.fields || {};
 
   const [step1Selected, setStep1Selected] = useState([]);
   const [step2Selected, setStep2Selected] = useState(null);
 
   const [step, setStep] = useState(1);
-
-  console.log({ records });
-  console.log({ step2Options });
-  console.log({ general });
-
-  console.log({ step1Selected });
-
-  console.log({ step2Selected });
-
-  console.log({ step });
-
-  console.log(
-    records.filter((item) => item.fields?.Option2?.includes(step2Selected))
-  );
 
   const showContent = () => {
     switch (step) {
@@ -91,7 +31,7 @@ const Leaflet = ({ records, step2Options, general }) => {
               Select 1 or more options to see what local support is available
             </h2>
             <Checkboxes
-              options={step1}
+              options={step1[locale] || step1.en}
               selected={step1Selected}
               updateSelected={(id, value) =>
                 setStep1Selected((prevSelec) => {
@@ -160,7 +100,7 @@ const Leaflet = ({ records, step2Options, general }) => {
     <>
       <Head>
         <link rel="icon" href="/favicon.png" />
-        <title>Sheffield - Worried about Money?</title>
+        <title>{details?.Title} - Worried about Money?</title>
         <meta
           name="description"
           content="Worrying About Money? Advice and support is available in Sheffield if you’re struggling to make ends meet"
@@ -197,8 +137,8 @@ const Leaflet = ({ records, step2Options, general }) => {
               Worrying About Money?
             </h1>
             <h2 className="text-lg font-light  mb-2">
-              Advice and support is available in Sheffield if you’re struggling
-              to make ends meet
+              Advice and support is available in {details?.Title} if you’re
+              struggling to make ends meet
             </h2>
           </>
         }
@@ -232,8 +172,6 @@ export async function getStaticProps(context) {
   const promises = [orgAPI(view), step2API(view), generalAPI("Grid view")];
 
   const [records, step2Options, general] = await Promise.allSettled(promises);
-
-  console.log("status", general);
 
   return {
     props: {

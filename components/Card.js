@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const formatUrl = (url) => {
   if (!url) {
@@ -13,19 +14,19 @@ const formatUrl = (url) => {
 };
 
 const Card = ({ details, clickable, handleCardClick }) => {
-  console.log({ details });
+  const { locale } = useRouter();
 
   const websitesArr = details.Links?.split(",");
   const phonesArr = details.Phones?.split(",");
 
-  console.log({ websitesArr, phonesArr });
-
   const contents = (
     <>
       <h1 className="text-lg font-medium py-2 border-b border-gray-300 bg-gray-50 px-4">
-        {details.Title}
+        {details[`Title-${locale}`] || details.Title}
       </h1>
-      <p className="text-md text-gray-700 mt-2 px-4">{details.Description}</p>
+      <p className="text-md text-gray-700 mt-2 px-4">
+        {details[`Description-${locale}`] || details.Description}
+      </p>
     </>
   );
 
