@@ -6,6 +6,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@tailwindcss/forms": "^0.3.3",
     "airtable": "^0.11.1",
     "next": "latest",
     "react": "^17.0.2",

@@ -9,7 +9,7 @@ const orgAPI = async (view) => {
   const airtable = new Airtable();
   const base = airtable.base("appEay9REblCErAGJ");
 
-  const data = await base("Table 1")
+  const data = await base("Step 3")
     .select({
       // Selecting the first 3 records in Grid view:
       maxRecords: 3,
