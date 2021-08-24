@@ -179,17 +179,19 @@ const Leaflet = ({ records, step2Options, general }) => {
 
 export async function getStaticProps(context) {
   const view = context.params.id;
-  const promises = [orgAPI(view), step2API(view)];
+  const promises = [orgAPI(view), step2API(view), generalAPI("Grid view")];
 
   const [records, step2Options, general] = await Promise.allSettled(promises);
+
+  console.log("status", general)
 
   return {
     props: {
       records: records.status === "fulfilled" ? records.value : [],
       step2Options:
         step2Options.status === "fulfilled" ? step2Options.value : [],
-        // general:
-        // general.status === "fulfilled" ? general.value : [],
+        general:
+        general.status === "fulfilled" ? general.value : [],
     },
     // Next.js will attempt to re-generate the page:
     // - When a request comes in
