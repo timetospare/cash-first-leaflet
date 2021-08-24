@@ -1,6 +1,10 @@
+import { useRouter } from "next/router";
 import orgAPI from "./api/orgs";
 
 const Leaflet = ({ records }) => {
+  const { query } = useRouter();
+  const { id } = query;
+
   console.log({ records });
   return <div>{id}</div>;
 };

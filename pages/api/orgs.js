@@ -9,13 +9,15 @@ const orgAPI = async (view) => {
   const airtable = new Airtable();
   const base = airtable.base("appEay9REblCErAGJ");
 
-  const data = await base.select({
-    // Selecting the first 3 records in Grid view:
-    maxRecords: 3,
-    view: "Grid view",
-  });
+  const data = await base("Table 1")
+    .select({
+      // Selecting the first 3 records in Grid view:
+      maxRecords: 3,
+      view: "Grid view",
+    })
+    .all();
 
-  return data;
+  return data.map((record) => record._rawJson);
 };
 
 export default orgAPI;
