@@ -26,19 +26,6 @@ export const Layout = ({ children }) => {
         </a>
       </header>
       <main className="w-full h-full overflow-scroll">{children}</main>
-      <footer className="w-full flex flex-row justify-end border-t p-2">
-        <div>
-          Powered by{" "}
-          <a
-            href="https://timetospare.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-pacifico"
-          >
-            Time to Spare
-          </a>
-        </div>
-      </footer>
     </div>
   );
 };

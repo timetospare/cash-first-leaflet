@@ -2,12 +2,12 @@ import { useState, useEffect, useContext } from "react";
 
 export const Pagination = ({ children, step, setStep }) => {
   return (
-    <div className="h-full flex flex-col justify-between p-4 overflow-scroll">
-      <div className="flex flex-row justify-center items-center text-white space-x-6">
+    <div className="h-full flex flex-col justify-between">
+      <div className="w-full flex flex-row justify-center items-center text-white space-x-6 p-4 pb-4">
         <div
           className={`${
             step === 1 ? "bg-indigo-600" : "bg-indigo-300"
-          } rounded p-2`}
+          } rounded text-xs sm:text-base p-2 whitespace-nowrap`}
         >
           Step 1
         </div>
@@ -28,7 +28,7 @@ export const Pagination = ({ children, step, setStep }) => {
         <div
           className={`${
             step === 2 ? "bg-indigo-600" : "bg-indigo-300"
-          } rounded p-2`}
+          } rounded text-xs sm:text-base p-2 whitespace-nowrap`}
         >
           Step 2
         </div>
@@ -49,13 +49,14 @@ export const Pagination = ({ children, step, setStep }) => {
         <div
           className={`${
             step === 3 ? "bg-indigo-600" : "bg-indigo-300"
-          } rounded p-2`}
+          } rounded text-xs sm:text-base p-2 whitespace-nowrap`}
         >
           Step 3
         </div>
       </div>
-      <div className="mx-auto max-w-2xl w-full py-8">{children}</div>
-      <div className="fixed bottom-24 right-0 mr-4">
+      <div className="overflow-scroll">{children}</div>
+
+      <div className="w-full bg-white p-4 flex justify-between">
         {step !== 1 && (
           <button
             type="button"
@@ -69,7 +70,9 @@ export const Pagination = ({ children, step, setStep }) => {
         {step !== 3 && step !== 2 && (
           <button
             type="button"
-            className="inline-flex items-center px-2.5 py-1.5 border border-transparent  font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className={`inline-flex items-center px-2.5 py-1.5 border border-transparent font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${
+              step === 1 && "ml-auto"
+            }`}
             onClick={() => setStep((oldStep) => oldStep + 1)}
           >
             Next
