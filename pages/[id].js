@@ -67,20 +67,6 @@ const Leaflet = ({ records, step2Options, general }) => {
 
   const [step, setStep] = useState(1);
 
-  console.log({ records });
-  console.log({ step2Options });
-  console.log({ general });
-
-  console.log({ step1Selected });
-
-  console.log({ step2Selected });
-
-  console.log({ step });
-
-  console.log(
-    records.filter((item) => item.fields?.Option2?.includes(step2Selected))
-  );
-
   const showContent = () => {
     switch (step) {
       case 1:
@@ -232,8 +218,6 @@ export async function getStaticProps(context) {
   const promises = [orgAPI(view), step2API(view), generalAPI("Grid view")];
 
   const [records, step2Options, general] = await Promise.allSettled(promises);
-
-  console.log("status", general);
 
   return {
     props: {

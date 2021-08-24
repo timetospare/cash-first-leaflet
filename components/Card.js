@@ -13,12 +13,8 @@ const formatUrl = (url) => {
 };
 
 const Card = ({ details, clickable, handleCardClick }) => {
-  console.log({ details });
-
   const websitesArr = details.Links?.split(",");
   const phonesArr = details.Phones?.split(",");
-
-  console.log({ websitesArr, phonesArr });
 
   const contents = (
     <>
