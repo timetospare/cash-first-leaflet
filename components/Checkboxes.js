@@ -1,6 +1,6 @@
 const Checkboxes = ({ options, selected, updateSelected }) => {
   return (
-    <form className="px-4">
+    <form>
       <fieldset className="space-y-8 -mt-4">
         <legend className="sr-only">Step 1 Options</legend>
         {options?.map((opt) => (

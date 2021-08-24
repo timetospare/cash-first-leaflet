@@ -73,7 +73,7 @@ const Leaflet = ({ records, step2Options }) => {
     switch (step) {
       case 1:
         return (
-          <div>
+          <div className="px-4">
             <h1 className="text-2xl font-bold">What's the problem?</h1>
             <h2 className="text-xl font-light">
               Select 1 or more options to see what local support is available
@@ -95,7 +95,7 @@ const Leaflet = ({ records, step2Options }) => {
         );
       case 2:
         return (
-          <div>
+          <div className="px-4">
             <h1 className="text-2xl font-bold">What are some options?</h1>
             <h2 className="text-xl font-light">
               Click on an option to see who to contact for advice and support on
@@ -161,7 +161,7 @@ const Leaflet = ({ records, step2Options }) => {
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
       </Head>
-      <Pagination step={step} setStep={setStep}>
+      <Pagination step={step} setStep={setStep} step1Selected={step1Selected}>
         <>
           {showContent()}
           <footer className="w-full flex flex-row justify-center text-sm text-gray-700 p-2">
