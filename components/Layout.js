@@ -6,11 +6,6 @@ export const Layout = ({ children }) => {
         <a href="#">About</a>
       </header>
       <main className="w-full h-full overflow-scroll">{children}</main>
-      <footer className="w-full flex flex-row justify-end border-t p-2">
-        <div>
-          Powered by <span className="font-pacifico">Time to Spare</span>
-        </div>
-      </footer>
     </div>
   );
 };

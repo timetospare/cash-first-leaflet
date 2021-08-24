@@ -103,19 +103,26 @@ const Leaflet = ({ records, step2Options }) => {
         <meta property="og:image:height" content="630" />
       </Head>
       <Pagination step={step} setStep={setStep}>
-        <Checkboxes
-          options={step1}
-          selected={step1Selected}
-          updateSelected={(id, value) =>
-            setStep1Selected((prevSelec) => {
-              if (!value) {
-                return prevSelec.filter((item) => item !== id);
-              } else {
-                return [...prevSelec, id];
-              }
-            })
-          }
-        />
+        <>
+          <Checkboxes
+            options={step1}
+            selected={step1Selected}
+            updateSelected={(id, value) =>
+              setStep1Selected((prevSelec) => {
+                if (!value) {
+                  return prevSelec.filter((item) => item !== id);
+                } else {
+                  return [...prevSelec, id];
+                }
+              })
+            }
+          />
+          <footer className="w-full flex flex-row justify-center text-sm text-gray-700 p-2">
+            <div>
+              Powered by <span className="font-pacifico">Time to Spare</span>
+            </div>
+          </footer>
+        </>
       </Pagination>
     </>
   );
