@@ -24,7 +24,9 @@ const Checkboxes = ({ options, selected, updateSelected }) => {
                 <span className="sr-only">{opt.title} </span>
                 <ul>
                   {opt.details?.map((deet) => (
-                    <li className="list-disc list-inside my-1">{deet}</li>
+                    <li key={deet} className="list-disc list-inside my-1">
+                      {deet}
+                    </li>
                   ))}
                 </ul>
               </span>
