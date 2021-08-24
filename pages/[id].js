@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import Checkboxes from "../components/Checkboxes";
 import orgAPI from "./api/orgs";
+import { Pagination } from "../components/Pagination";
 import step2API from "./api/step2";
 
 const step1 = [
@@ -65,7 +66,7 @@ const Leaflet = ({ records, step2Options }) => {
 
   console.log({ step1Selected });
   return (
-    <div>
+    <Pagination>
       {id}
       <Checkboxes
         options={step1}
@@ -80,7 +81,7 @@ const Leaflet = ({ records, step2Options }) => {
           })
         }
       />
-    </div>
+    </Pagination>
   );
 };
 
