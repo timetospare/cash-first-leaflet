@@ -68,6 +68,38 @@ const Leaflet = ({ records, step2Options }) => {
   console.log({ step2Options });
 
   console.log({ step1Selected });
+
+  const showContent = () => {
+    switch (step) {
+      case 1:
+        return (
+          <Checkboxes
+            options={step1}
+            selected={step1Selected}
+            updateSelected={(id, value) =>
+              setStep1Selected((prevSelec) => {
+                if (!value) {
+                  return prevSelec.filter((item) => item !== id);
+                } else {
+                  return [...prevSelec, id];
+                }
+              })
+            }
+          />
+        );
+      case 2:
+        return step2Options
+          .filter((item) =>
+            item.fields?.Option1?.some((key) => step1Selected?.includes(key))
+          )
+          .map((item) => <div>{item.fields?.Title}</div>);
+      case 3:
+        return <div>Step 3</div>;
+      default:
+        return null;
+    }
+  };
+
   return (
     <>
       <Head>
@@ -103,27 +135,15 @@ const Leaflet = ({ records, step2Options }) => {
         <meta property="og:image:height" content="630" />
       </Head>
       <Pagination step={step} setStep={setStep}>
-        {id}
-        <Checkboxes
-          options={step1}
-          selected={step1Selected}
-          updateSelected={(id, value) =>
-            setStep1Selected((prevSelec) => {
-              if (!value) {
-                return prevSelec.filter((item) => item !== id);
-              } else {
-                return [...prevSelec, id];
-              }
-            })
-          }
-        />
+        {showContent()}
       </Pagination>
     </>
   );
 };
 
-export async function getStaticProps() {
-  const promises = [orgAPI("view"), step2API("view")];
+export async function getStaticProps(context) {
+  const view = context.params.id;
+  const promises = [orgAPI(view), step2API(view)];
 
   const [records, step2Options] = await Promise.allSettled(promises);
 

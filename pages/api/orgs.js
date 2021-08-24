@@ -12,8 +12,8 @@ const orgAPI = async (view) => {
   const data = await base("Step 3")
     .select({
       // Selecting the first 3 records in Grid view:
-      maxRecords: 3,
-      view: "Grid view",
+      maxRecords: 25,
+      view,
     })
     .all();
 

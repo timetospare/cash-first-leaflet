@@ -12,8 +12,8 @@ const step2API = async (view) => {
   const data = await base("Step 2")
     .select({
       // Selecting the first 3 records in Grid view:
-      maxRecords: 3,
-      view: "Grid view",
+      maxRecords: 25,
+      view,
     })
     .all();
 
