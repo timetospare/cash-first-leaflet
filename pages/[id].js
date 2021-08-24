@@ -73,28 +73,55 @@ const Leaflet = ({ records, step2Options }) => {
     switch (step) {
       case 1:
         return (
-          <Checkboxes
-            options={step1}
-            selected={step1Selected}
-            updateSelected={(id, value) =>
-              setStep1Selected((prevSelec) => {
-                if (!value) {
-                  return prevSelec.filter((item) => item !== id);
-                } else {
-                  return [...prevSelec, id];
-                }
-              })
-            }
-          />
+          <div>
+            <h1 className="text-2xl font-bold">What's the problem?</h1>
+            <h2 className="text-xl font-light">
+              Select 1 or more options to see what local support is available
+            </h2>
+            <Checkboxes
+              options={step1}
+              selected={step1Selected}
+              updateSelected={(id, value) =>
+                setStep1Selected((prevSelec) => {
+                  if (!value) {
+                    return prevSelec.filter((item) => item !== id);
+                  } else {
+                    return [...prevSelec, id];
+                  }
+                })
+              }
+            />
+          </div>
         );
       case 2:
-        return step2Options
-          .filter((item) =>
-            item.fields?.Option1?.some((key) => step1Selected?.includes(key))
-          )
-          .map((item) => <div>{item.fields?.Title}</div>);
+        return (
+          <div>
+            <h1 className="text-2xl font-bold">What are some options?</h1>
+            <h2 className="text-xl font-light">
+              Click on an option to see who to contact for advice and support on
+              these options
+            </h2>
+            {step2Options
+              .filter((item) =>
+                item.fields?.Option1?.some((key) =>
+                  step1Selected?.includes(key)
+                )
+              )
+              .map((item) => (
+                <div>{item.fields?.Title}</div>
+              ))}
+          </div>
+        );
       case 3:
-        return <div>Step 3</div>;
+        return (
+          <div>
+            <h1 className="text-2xl font-bold">Where can I get help?</h1>
+            <h2 className="text-xl font-light">
+              Each of these services offer free and confidential advice on the
+              options highlighted above
+            </h2>
+          </div>
+        );
       default:
         return null;
     }

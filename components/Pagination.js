@@ -54,7 +54,7 @@ export const Pagination = ({ children, step, setStep }) => {
           Step 3
         </div>
       </div>
-      {children}
+      <div className="mx-auto max-w-2xl w-full py-8">{children}</div>
       <div className="fixed bottom-24 right-0 mr-4">
         {step !== 1 && (
           <button
