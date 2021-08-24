@@ -3,6 +3,7 @@ import Head from "next/head";
 import { useState } from "react";
 import Checkboxes from "../components/Checkboxes";
 import orgAPI from "./api/orgs";
+import Card from "../components/Card";
 import { Pagination } from "../components/Pagination";
 import step2API from "./api/step2";
 import generalAPI from "./api/general"
@@ -62,6 +63,7 @@ const Leaflet = ({ records, step2Options, general }) => {
   const { id } = query;
 
   const [step1Selected, setStep1Selected] = useState([]);
+  const [step2Selected, setStep2Selected] = useState(null);
 
   const [step, setStep] = useState(1);
 
@@ -110,7 +112,16 @@ const Leaflet = ({ records, step2Options, general }) => {
                 )
               )
               .map((item) => (
-                <div>{item.fields?.Title}</div>
+                <Card
+                  details={item.fields}
+                  clickable
+                  handleCardClick={() => {
+                    setStep2Selected(item.fields.Title);
+                    setStep((oldStep) => {
+                      return oldStep + 1;
+                    });
+                  }}
+                />
               ))}
           </div>
         );
@@ -119,9 +130,13 @@ const Leaflet = ({ records, step2Options, general }) => {
           <div>
             <h1 className="text-2xl font-bold">Where can I get help?</h1>
             <h2 className="text-xl font-light">
-              Each of these services offer free and confidential advice on the
-              options highlighted above
+              Each of these services offer free and confidential advice
             </h2>
+            {records
+              .filter((item) => item.fields?.Option2?.includes(step2Selected))
+              .map((item) => (
+                <Card details={item.fields} />
+              ))}
           </div>
         );
       default:
