@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 
-export const Pagination = ({ children, step, setStep }) => {
+export const Pagination = ({ children, step, setStep, step1Selected }) => {
   return (
     <div className="h-full flex flex-col justify-between">
       <div className="w-full flex flex-row justify-center items-center text-white space-x-6 p-4 pb-4">
@@ -60,7 +60,7 @@ export const Pagination = ({ children, step, setStep }) => {
         {step !== 1 && (
           <button
             type="button"
-            className="inline-flex items-center px-2.5 py-1.5 border border-transparent font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             onClick={() => setStep((oldStep) => oldStep - 1)}
           >
             Back
@@ -72,7 +72,11 @@ export const Pagination = ({ children, step, setStep }) => {
             type="button"
             className={`inline-flex items-center px-2.5 py-1.5 border border-transparent font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${
               step === 1 && "ml-auto"
+            } ${
+              step1Selected?.length === 0 &&
+              "cursor-not-allowed bg-indigo-300 hover:bg-indigo-400"
             }`}
+            disabled={step1Selected?.length === 0}
             onClick={() => setStep((oldStep) => oldStep + 1)}
           >
             Next
