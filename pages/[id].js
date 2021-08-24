@@ -1,20 +1,21 @@
 import { useRouter } from "next/router";
 import orgAPI from "./api/orgs";
+import { Pagination } from "../components/Pagination";
 
 const Leaflet = ({ records }) => {
   const { query } = useRouter();
   const { id } = query;
 
   console.log({ records });
-  return <div>{id}</div>;
+  return <Pagination></Pagination>;
 };
 
 export async function getStaticProps() {
-  const records = await orgAPI("view");
+  //   const records = await orgAPI("view");
 
   return {
     props: {
-      records,
+      records: {},
     },
     // Next.js will attempt to re-generate the page:
     // - When a request comes in
