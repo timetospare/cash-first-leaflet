@@ -1,12 +1,21 @@
 import { useRouter } from "next/router";
 import orgAPI from "./api/orgs";
+import Card from "../components/Card";
+import { useState } from "react";
 
 const Leaflet = ({ records }) => {
   const { query } = useRouter();
   const { id } = query;
 
+  const [clickable, setClickable] = useState(false);
+
   console.log({ records });
-  return <div>{id}</div>;
+  return (
+    <div>
+      {/* {id} */}
+      <Card details={records[0].fields} clickable={clickable} />
+    </div>
+  );
 };
 
 export async function getStaticProps() {
