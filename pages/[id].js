@@ -103,7 +103,6 @@ const Leaflet = ({ records, step2Options }) => {
         <meta property="og:image:height" content="630" />
       </Head>
       <Pagination step={step} setStep={setStep}>
-        {id}
         <Checkboxes
           options={step1}
           selected={step1Selected}
