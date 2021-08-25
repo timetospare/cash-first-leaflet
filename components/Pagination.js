@@ -97,7 +97,7 @@ export const Pagination = ({
 
       <div className="w-full bg-white md:py-4 py-2  border-t border-gray-300">
         <div className="mx-auto max-w-2xl px-2 md:px-4 w-full flex justify-between">
-          {step === 1 ? buttons[0] : buttons[1]}
+          {step === 1 ? buttons[rtl ? 0 : 1] : buttons[rtl ? 1 : 0]}
         </div>
       </div>
     </div>
