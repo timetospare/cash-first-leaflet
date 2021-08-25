@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Checkboxes from "../components/Checkboxes";
 import orgAPI from "./api/orgs";
 import { Pagination } from "../components/Pagination";
@@ -57,7 +57,7 @@ const step1 = [
   },
 ];
 
-const Leaflet = ({ records, step2Options, general }) => {
+const Leaflet = ({ records, step2Options, general, view }) => {
   const { query } = useRouter();
   const { id } = query;
 
@@ -67,13 +67,16 @@ const Leaflet = ({ records, step2Options, general }) => {
 
   console.log({ records });
   console.log({ step2Options });
-  console.log({ general });
-
-  const logos = general[0].fields.Logos.split(',')
-
-  console.log({logos})
-
   console.log({ step1Selected });
+
+  const generalData = general.filter((record) => {
+    return record.fields.Location === view;
+  })[0].fields;
+
+  console.log({ generalData });
+
+  const logos = generalData?.Logos.split(',')
+
 
   const showContent = () => {
     switch (step) {
@@ -170,18 +173,27 @@ const Leaflet = ({ records, step2Options, general }) => {
       <Pagination step={step} setStep={setStep} step1Selected={step1Selected}>
         <>
           {showContent()}
-          <footer className="w-full flex flex-col justify-center items-center text-sm text-gray-700 p-2">
+          <footer className="w-full flex flex-col justify-center items-center text-sm text-gray-700 p-2 mt-5 py-3 bg-gray-50">
             <div>
               Powered by <span className="font-pacifico">Time to Spare</span>
             </div>
-            <div>
-              <h3 className="mb-2">Supported by</h3>
-              <div className="flex flex-wrap justify-center items-center">
-                {logos.map((src, i) => {
-                  return <img className="w-20 h-16 object-contain" src={src} key={i}/>;
-                })}
+            {logos?.length > 0 && (
+              <div className="flex flex-col md:flex justify-center items-center mt-4">
+                <h3 className="mb-2 self-start">Supported by</h3>
+                <div className="flex flex-wrap justify-center items-center">
+                  {logos.map((src, i) => {
+                    return (
+                      <img
+                        className="w-20 h-16 object-contain mr-2"
+                        src={src}
+                        key={i}
+                        alt=""
+                      />
+                    );
+                  })}
+                </div>
               </div>
-            </div>
+            )}
           </footer>
         </>
       </Pagination>
@@ -203,6 +215,7 @@ export async function getStaticProps(context) {
       step2Options:
         step2Options.status === "fulfilled" ? step2Options.value : [],
       general: general.status === "fulfilled" ? general.value : [],
+      view,
     },
     // Next.js will attempt to re-generate the page:
     // - When a request comes in
