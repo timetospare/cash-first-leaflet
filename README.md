@@ -8,7 +8,7 @@ Preview the Sheffield example live: https://cash-first-leaflet.vercel.app/sheffi
 
 ## Edit content
 
-This website relies on an Airtable base to display content of services available.
+This website relies on an Airtable base to display content of services available: https://airtable.com/tbltWQpNPa09g6kd7/viw0FFD1hJuYkBeHV?blocks=hide
 
 Please contact IFAN if any contact is inaccurate or out of date, or if you can help with translations.
 
