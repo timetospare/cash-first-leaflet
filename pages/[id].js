@@ -52,7 +52,7 @@ const Leaflet = ({ records, step2Options, general, content }) => {
     return optionModel;
   };
 
-  const logos = details?.Logos.split(',')
+  const logos = details?.Logos.split(",");
 
   const showContent = () => {
     switch (step) {
@@ -211,20 +211,9 @@ const Leaflet = ({ records, step2Options, general, content }) => {
         <>
           {showContent()}
           <footer className="w-full flex flex-col justify-center items-center text-sm text-gray-700 p-2 mt-8 ">
-            <div>
-              Powered by{" "}
-              <a
-                href="https://timetospare.com"
-                rel="noopener noreferrer"
-                target="_blank"
-                className="font-pacifico"
-              >
-                Time to Spare
-              </a>
-            </div>
             {logos?.length > 0 && (
-              <div className="flex flex-col md:flex justify-center items-center mt-4">
-                <h3 className="mb-2 ">Supported by</h3>
+              <div className="flex flex-col md:flex justify-center items-center mb-8">
+                <h3 className="mb-2 text-lg font-medium mb-2">Supported by</h3>
                 <div className="flex flex-wrap justify-center items-center">
                   {logos.map((src, i) => {
                     return (
@@ -239,6 +228,17 @@ const Leaflet = ({ records, step2Options, general, content }) => {
                 </div>
               </div>
             )}
+            <div>
+              Powered by{" "}
+              <a
+                href="https://timetospare.com"
+                rel="noopener noreferrer"
+                target="_blank"
+                className="font-pacifico"
+              >
+                Time to Spare
+              </a>
+            </div>
           </footer>
         </>
       </Pagination>
