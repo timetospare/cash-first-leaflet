@@ -6,6 +6,13 @@ const languageNames = {
   fr: "French",
   bn: "Bengali",
   ur: "Urdu",
+  ar: "Arabic",
+  pl: "Polish",
+  ro: "Romanian",
+  fa: "Farsi",
+  sk: "Slovakian",
+  gd: "Gaelic",
+  bg: "Bulgarian",
 };
 
 export const Layout = ({ children }) => {

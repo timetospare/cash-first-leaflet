@@ -11,7 +11,7 @@ import contentAPI from "./api/content";
 import step1 from "../models/step1";
 import defaultContent from "../models/defaultContent";
 
-const rtlLanguages = ["ur"];
+const rtlLanguages = ["ur", "fa", "ar"];
 
 const Leaflet = ({ records, step2Options, general, content }) => {
   const { query, locale } = useRouter();
@@ -52,7 +52,7 @@ const Leaflet = ({ records, step2Options, general, content }) => {
     return optionModel;
   };
 
-  const logos = details?.Logos.split(",");
+  const logos = details?.Logos?.split(",") || [];
 
   const showContent = () => {
     switch (step) {
