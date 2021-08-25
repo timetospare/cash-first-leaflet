@@ -21,6 +21,8 @@ const Leaflet = ({ records, step2Options, general }) => {
 
   const [step, setStep] = useState(1);
 
+  const logos = details?.Logos.split(',')
+
   const showContent = () => {
     switch (step) {
       case 1:
@@ -148,7 +150,7 @@ const Leaflet = ({ records, step2Options, general }) => {
       >
         <>
           {showContent()}
-          <footer className="w-full flex flex-row justify-center text-sm text-gray-700 p-2 mt-8">
+          <footer className="w-full flex flex-col justify-center items-center text-sm text-gray-700 p-2 mt-8 ">
             <div>
               Powered by{" "}
               <a
@@ -160,6 +162,23 @@ const Leaflet = ({ records, step2Options, general }) => {
                 Time to Spare
               </a>
             </div>
+            {logos?.length > 0 && (
+              <div className="flex flex-col md:flex justify-center items-center mt-4">
+                <h3 className="mb-2 ">Supported by</h3>
+                <div className="flex flex-wrap justify-center items-center">
+                  {logos.map((src, i) => {
+                    return (
+                      <img
+                        className="w-20 h-16 object-contain mr-2"
+                        src={src}
+                        key={i}
+                        alt=""
+                      />
+                    );
+                  })}
+                </div>
+              </div>
+            )}
           </footer>
         </>
       </Pagination>
