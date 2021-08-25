@@ -5,13 +5,12 @@ const languageNames = {
   en: "English",
   fr: "French",
   bn: "Bengali",
+  ur: "Urdu",
 };
 
 export const Layout = ({ children }) => {
   const router = useRouter();
   const { locales, locale } = router;
-
-  console.log({ router });
 
   return (
     <div className="w-full h-screen flex flex-col p-0">
@@ -21,7 +20,7 @@ export const Layout = ({ children }) => {
           rel="stylesheet"
         />
       </Head>
-      <header className="w-full p-2 flex flex-row justify-between border-b items-center">
+      <header className="w-full p-2 flex flex-row justify-between border-b items-center bg-gray-50">
         <a
           href="https://www.foodaidnetwork.org.uk/"
           rel="noopener noreferrer"
@@ -32,24 +31,24 @@ export const Layout = ({ children }) => {
         <div className="flex items-center">
           <form>
             <label
-              for="language"
+              htmlFor="language"
               className="sr-only block text-sm font-medium text-gray-700"
             >
-              Location
+              Language
             </label>
             <select
               onChange={(e) => {
-                console.log(e.target);
                 router.push(router.asPath, router.asPath, {
                   locale: e.target.value,
                 });
               }}
+              value={locale}
               id="language"
               name="language"
               className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
             >
               {locales.map((key) => (
-                <option key={key} value={key} selected={key === locale}>
+                <option key={key} value={key}>
                   {languageNames[key]}
                 </option>
               ))}
