@@ -7,9 +7,11 @@ import Card from "../components/Card";
 import { Pagination } from "../components/Pagination";
 import step2API from "./api/step2";
 import generalAPI from "./api/general";
+import contentAPI from "./api/content";
 import step1 from "../models/step1";
+import defaultContent from "../models/defaultContent";
 
-const Leaflet = ({ records, step2Options, general }) => {
+const Leaflet = ({ records, step2Options, general, content }) => {
   const { query, locale } = useRouter();
   const { id } = query;
 
@@ -21,17 +23,52 @@ const Leaflet = ({ records, step2Options, general }) => {
 
   const [step, setStep] = useState(1);
 
+  const generateCheckboxOptions = () => {
+    const optionModel = [];
+    let contentExists = true;
+    let i = 1;
+    while (contentExists) {
+      console.log(`step1option${i}`);
+      console.log(content[`step1option${i}`]);
+      if (content[`step1option${i}`]) {
+        const deets = content[`step1option${i}`];
+        console.log(deets[`details-${locale}`]);
+
+        const details = deets[`details-${locale}`] || deets[`details-en`] || "";
+
+        optionModel.push({
+          id: step1.en[i - 1].id,
+          title: deets[`text-${locale}`] || deets["text-en"],
+          details: details
+            .replace(/- /g, "")
+            .split("\n")
+            .filter((item) => item),
+        });
+        i += 1;
+      } else {
+        contentExists = false;
+      }
+    }
+    return optionModel;
+  };
+
+  console.log(generateCheckboxOptions());
+
   const showContent = () => {
     switch (step) {
       case 1:
         return (
-          <div className="px-4">
-            <h1 className="text-2xl font-medium">What's the problem?</h1>
+          <div>
+            <h1 className="text-2xl font-medium">
+              {content.step1Heading[`text-${locale}`] ||
+                content.step1Heading[`text-en`]}
+            </h1>
             <h2 className="text-xl font-light">
-              Select 1 or more options to see what local support is available
+              {content.step1Subheading[`text-${locale}`] ||
+                content.step1Subheading[`text-en`]}
             </h2>
             <Checkboxes
-              options={step1[locale] || step1.en}
+              options={generateCheckboxOptions()}
               selected={step1Selected}
               updateSelected={(id, value) =>
                 setStep1Selected((prevSelec) => {
@@ -47,11 +84,14 @@ const Leaflet = ({ records, step2Options, general }) => {
         );
       case 2:
         return (
-          <div className="px-4">
-            <h1 className="text-2xl font-medium">What are some options?</h1>
+          <div>
+            <h1 className="text-2xl font-medium">
+              {content.step2Heading[`text-${locale}`] ||
+                content.step2Heading[`text-en`]}
+            </h1>
             <h2 className="text-xl font-light">
-              Click on an option to see who to contact for advice and support on
-              these options
+              {content.step2Subheading[`text-${locale}`] ||
+                content.step2Subheading[`text-en`]}
             </h2>
             <div className="space-y-4 mt-4">
               {step2Options
@@ -62,6 +102,8 @@ const Leaflet = ({ records, step2Options, general }) => {
                 )
                 .map((item) => (
                   <Card
+                    content={content}
+                    key={item.id}
                     details={item.fields}
                     clickable
                     handleCardClick={() => {
@@ -77,16 +119,31 @@ const Leaflet = ({ records, step2Options, general }) => {
         );
       case 3:
         return (
-          <div className="px-4">
-            <h1 className="text-2xl font-medium">Where can I get help?</h1>
+          <div>
+            <h1 className="text-2xl font-medium">
+              {content.step3Heading[`text-${locale}`] ||
+                content.step3Heading[`text-en`]}
+            </h1>
             <h2 className="text-xl font-light">
-              Each of these services offer free and confidential advice
+              {content.step3Subheading[`text-${locale}`] ||
+                content.step3Subheading[`text-en`]}
             </h2>
             <div className="space-y-4 mt-4">
               {records
                 .filter((item) => item.fields?.Option2?.includes(step2Selected))
                 .map((item) => (
-                  <Card details={item.fields} />
+                  <Card content={content} key={item.id} details={item.fields} />
+                ))}
+            </div>
+            <h1 className="text-2xl font-medium mt-12">
+              {content.step3OtherHeading[`text-${locale}`] ||
+                content.step3OtherHeading[`text-en`]}
+            </h1>
+            <div className="space-y-4 mt-4">
+              {records
+                .filter((item) => item.fields?.Option2?.includes("Other"))
+                .map((item) => (
+                  <Card content={content} key={item.id} details={item.fields} />
                 ))}
             </div>
           </div>
@@ -131,14 +188,19 @@ const Leaflet = ({ records, step2Options, general }) => {
         <meta property="og:image:height" content="630" />
       </Head>
       <Pagination
+        content={content}
         header={
           <>
             <h1 className="text-3xl font-medium pt-4 pb-2">
-              Worrying About Money?
+              {details.Heading1}
             </h1>
             <h2 className="text-lg font-light  mb-2">
-              Advice and support is available in {details?.Title} if you’re
-              struggling to make ends meet
+              {details.Heading2 || (
+                <>
+                  Advice and support is available in {details?.Title} if you’re
+                  struggling to make ends meet
+                </>
+              )}
             </h2>
           </>
         }
@@ -169,9 +231,16 @@ const Leaflet = ({ records, step2Options, general }) => {
 
 export async function getStaticProps(context) {
   const view = context.params.id;
-  const promises = [orgAPI(view), step2API(view), generalAPI("Grid view")];
+  const promises = [
+    orgAPI(view),
+    step2API(view),
+    generalAPI("Grid view"),
+    contentAPI("Grid view"),
+  ];
 
-  const [records, step2Options, general] = await Promise.allSettled(promises);
+  const [records, step2Options, general, content] = await Promise.allSettled(
+    promises
+  );
 
   return {
     props: {
@@ -179,6 +248,14 @@ export async function getStaticProps(context) {
       step2Options:
         step2Options.status === "fulfilled" ? step2Options.value : [],
       general: general.status === "fulfilled" ? general.value : [],
+      content:
+        content.status === "fulfilled"
+          ? content.value?.reduce((obj, item) => {
+              const { content, ...rest } = item.fields;
+              obj[content] = rest;
+              return obj;
+            }, {})
+          : defaultContent,
     },
     // Next.js will attempt to re-generate the page:
     // - When a request comes in

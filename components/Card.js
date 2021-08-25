@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/router";
 
 const formatUrl = (url) => {
@@ -13,7 +11,7 @@ const formatUrl = (url) => {
   }
 };
 
-const Card = ({ details, clickable, handleCardClick }) => {
+const Card = ({ details, clickable, handleCardClick, content }) => {
   const { locale } = useRouter();
 
   const websitesArr = details.Links?.split(",");
@@ -38,13 +36,13 @@ const Card = ({ details, clickable, handleCardClick }) => {
     >
       {contents}
       <button
-        className="w-36 mr-2 mt-4 self-end border bg-none bg-indigo-600 hover:bg-indigo-700 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 text-md rounded-full px-3 py-2"
+        className=" mr-2 mt-4 self-end border bg-none bg-indigo-600 hover:bg-indigo-700 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 text-sm rounded-full px-3 py-2"
         onClick={(e) => {
           e.stopPropagation();
           handleCardClick();
         }}
       >
-        Contact
+        {content.buttonText[`text-${locale}`] || content.buttonText[`text-en`]}
       </button>
     </div>
   ) : (
@@ -70,6 +68,7 @@ const Card = ({ details, clickable, handleCardClick }) => {
             {websitesArr?.length &&
               websitesArr.map((url) => (
                 <a
+                  key={url}
                   className="ml-2 underline text-blue-700"
                   href={formatUrl(url)}
                   target="_blank"
@@ -97,7 +96,11 @@ const Card = ({ details, clickable, handleCardClick }) => {
           </svg>
           <div>
             {phonesArr?.length &&
-              phonesArr.map((number) => <p className="ml-2">{number}</p>)}
+              phonesArr.map((number) => (
+                <a href={`tel:${number}`} key={number}>
+                  <p className="ml-2 text-blue-700 md:text-black">{number}</p>
+                </a>
+              ))}
           </div>
         </div>
       </div>

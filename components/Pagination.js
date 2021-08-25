@@ -1,13 +1,17 @@
+import { useRouter } from "next/router";
 import { useState, useEffect, useContext, useRef } from "react";
 
 export const Pagination = ({
   children,
   step,
   setStep,
+  content,
   step1Selected,
   header,
 }) => {
   const parentEl = useRef(null);
+
+  const { locale } = useRouter();
 
   useEffect(() => {
     if (parentEl.current) {
@@ -18,7 +22,7 @@ export const Pagination = ({
   return (
     <div className="h-full flex flex-col justify-between">
       <div className="overflow-auto bg-gray-50" ref={parentEl}>
-        <div className="mx-auto max-w-2xl md:px-4 px-2  pb-4 bg-white">
+        <div className="mx-auto max-w-2xl md:px-6 px-2  pb-4 bg-white">
           {header}
           <div className="w-full flex flex-row justify-center border-t border-b items-center text-white space-x-6 p-2 md:p-4 mb-8 mt-4">
             <button
@@ -27,7 +31,9 @@ export const Pagination = ({
                 step === 1 ? "text-gray-800" : "text-gray-300"
               }  whitespace-nowrap`}
             >
-              Step 1
+              {content.stepName[`text-${locale}`] ||
+                content.stepName[`text-en`]}{" "}
+              1
             </button>
             <svg
               xmlns="http://www.w3.org/2000/svg"
