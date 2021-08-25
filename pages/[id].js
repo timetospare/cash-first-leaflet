@@ -11,9 +11,13 @@ import contentAPI from "./api/content";
 import step1 from "../models/step1";
 import defaultContent from "../models/defaultContent";
 
+const rtlLanguages = ["ur"];
+
 const Leaflet = ({ records, step2Options, general, content }) => {
   const { query, locale } = useRouter();
   const { id } = query;
+
+  const rtl = rtlLanguages.includes(locale);
 
   const details =
     general?.find((item) => item?.fields?.Location === id)?.fields || {};
@@ -28,12 +32,8 @@ const Leaflet = ({ records, step2Options, general, content }) => {
     let contentExists = true;
     let i = 1;
     while (contentExists) {
-      console.log(`step1option${i}`);
-      console.log(content[`step1option${i}`]);
       if (content[`step1option${i}`]) {
         const deets = content[`step1option${i}`];
-        console.log(deets[`details-${locale}`]);
-
         const details = deets[`details-${locale}`] || deets[`details-en`] || "";
 
         optionModel.push({
@@ -59,15 +59,16 @@ const Leaflet = ({ records, step2Options, general, content }) => {
       case 1:
         return (
           <div>
-            <h1 className="text-2xl font-medium">
+            <h1 className={`text-2xl font-medium ${rtl ? "text-right" : ""}`}>
               {content.step1Heading[`text-${locale}`] ||
                 content.step1Heading[`text-en`]}
             </h1>
-            <h2 className="text-xl font-light">
+            <h2 className={`text-xl font-light ${rtl ? "text-right" : ""}`}>
               {content.step1Subheading[`text-${locale}`] ||
                 content.step1Subheading[`text-en`]}
             </h2>
             <Checkboxes
+              rtl={rtl}
               options={generateCheckboxOptions()}
               selected={step1Selected}
               updateSelected={(id, value) =>
@@ -85,11 +86,11 @@ const Leaflet = ({ records, step2Options, general, content }) => {
       case 2:
         return (
           <div>
-            <h1 className="text-2xl font-medium">
+            <h1 className={`text-2xl font-medium ${rtl ? "text-right" : ""}`}>
               {content.step2Heading[`text-${locale}`] ||
                 content.step2Heading[`text-en`]}
             </h1>
-            <h2 className="text-xl font-light">
+            <h2 className={`text-xl font-light ${rtl ? "text-right" : ""}`}>
               {content.step2Subheading[`text-${locale}`] ||
                 content.step2Subheading[`text-en`]}
             </h2>
@@ -102,6 +103,7 @@ const Leaflet = ({ records, step2Options, general, content }) => {
                 )
                 .map((item) => (
                   <Card
+                    rtl={rtl}
                     content={content}
                     key={item.id}
                     details={item.fields}
@@ -120,11 +122,11 @@ const Leaflet = ({ records, step2Options, general, content }) => {
       case 3:
         return (
           <div>
-            <h1 className="text-2xl font-medium">
+            <h1 className={`text-2xl font-medium ${rtl ? "text-right" : ""}`}>
               {content.step3Heading[`text-${locale}`] ||
                 content.step3Heading[`text-en`]}
             </h1>
-            <h2 className="text-xl font-light">
+            <h2 className={`text-xl font-light ${rtl ? "text-right" : ""}`}>
               {content.step3Subheading[`text-${locale}`] ||
                 content.step3Subheading[`text-en`]}
             </h2>
@@ -132,7 +134,12 @@ const Leaflet = ({ records, step2Options, general, content }) => {
               {records
                 .filter((item) => item.fields?.Option2?.includes(step2Selected))
                 .map((item) => (
-                  <Card content={content} key={item.id} details={item.fields} />
+                  <Card
+                    rtl={rtl}
+                    content={content}
+                    key={item.id}
+                    details={item.fields}
+                  />
                 ))}
             </div>
             <h1 className="text-2xl font-medium mt-12">
@@ -143,7 +150,12 @@ const Leaflet = ({ records, step2Options, general, content }) => {
               {records
                 .filter((item) => item.fields?.Option2?.includes("Other"))
                 .map((item) => (
-                  <Card content={content} key={item.id} details={item.fields} />
+                  <Card
+                    rtl={rtl}
+                    content={content}
+                    key={item.id}
+                    details={item.fields}
+                  />
                 ))}
             </div>
           </div>
@@ -176,7 +188,8 @@ const Leaflet = ({ records, step2Options, general, content }) => {
           content="Sheffield - Worried about Money?"
         />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta
+        {/*
+          <meta
           name="twitter:image"
           content="https://i.ibb.co/HDff9SP/find-food-twitter.png"
         />
@@ -184,25 +197,28 @@ const Leaflet = ({ records, step2Options, general, content }) => {
           property="og:image"
           content="https://i.ibb.co/HDff9SP/find-food-twitter.png"
         />
+          */}
+
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
       </Head>
       <Pagination
+        rtl={rtl}
         content={content}
         header={
-          <>
+          <div className={rtl ? "text-right" : ""}>
             <h1 className="text-3xl font-medium pt-4 pb-2">
-              {details.Heading1}
+              {details[`Heading1-${locale}`] || details[`Heading1`]}
             </h1>
             <h2 className="text-lg font-light  mb-2">
-              {details.Heading2 || (
+              {details[`Heading2-${locale}`] || details[`Heading2`] || (
                 <>
                   Advice and support is available in {details?.Title} if you’re
                   struggling to make ends meet
                 </>
               )}
             </h2>
-          </>
+          </div>
         }
         step={step}
         setStep={setStep}
