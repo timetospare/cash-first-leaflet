@@ -36,6 +36,8 @@ const defaultContent = {
     "text-en": "Each of these services offer free and confidential advice",
   },
   step3OtherHeading: { "text-en": "Other support:" },
+  nextButton: { "text-en": "Next" },
+  backButton: { "text-en": "Back" },
 };
 
 export default defaultContent;
