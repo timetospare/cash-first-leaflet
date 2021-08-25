@@ -3,92 +3,37 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import Checkboxes from "../components/Checkboxes";
 import orgAPI from "./api/orgs";
+import Card from "../components/Card";
 import { Pagination } from "../components/Pagination";
 import step2API from "./api/step2";
 import generalAPI from "./api/general";
+import step1 from "../models/step1";
 
-const step1 = [
-  {
-    id: "No Money",
-    title: "I suddenly have no money",
-    details: [
-      "Lost job / reduced hours",
-      "Lost money / unexpected expense",
-      "Disaster (e.g. flood or fire)",
-      "Relationship breakdown",
-      "Money stopped (e.g. failed a medical)",
-    ],
-  },
-  {
-    id: "Sanctioned",
-    title: "I have been sanctioned",
-  },
-  {
-    id: "Awaiting Benefit",
-    title: "I am waiting on a benefit payment / decision",
-    details: [
-      "Made a new claim for benefit",
-      "Benefit payment is delayed",
-      "Waiting for a benefit decision",
-    ],
-  },
-  {
-    id: "Money Doesn't Stretch",
-    title: "My money doesn’t stretch far enough",
-    details: [
-      "Deciding between food / fuel / mobile credit",
-      "Low income or zero hours contract",
-      "Statutory Sick Pay too low to cover costs",
-      "Facing redundancy",
-      "Not sure if eligible for support",
-      "Change of circumstance (e.g. new baby / bereavement / illness / left partner)",
-    ],
-  },
-  {
-    id: "Debt",
-    title: "I have debt",
-    details: [
-      "Rent or Council Tax arrears",
-      "Gas or electricity",
-      "Payday loans",
-      "Owe friends and family",
-      "Benefit repayments",
-    ],
-  },
-];
-
-const Leaflet = ({ records, step2Options, general, view }) => {
-  const { query } = useRouter();
+const Leaflet = ({ records, step2Options, general }) => {
+  const { query, locale } = useRouter();
   const { id } = query;
 
+  const details =
+    general?.find((item) => item?.fields?.Location === id)?.fields || {};
+
   const [step1Selected, setStep1Selected] = useState([]);
+  const [step2Selected, setStep2Selected] = useState(null);
 
   const [step, setStep] = useState(1);
 
-  console.log({ records });
-  console.log({ step2Options });
-  console.log({ step1Selected });
-
-  const generalData = general.filter((record) => {
-    return record.fields.Location === view;
-  })[0].fields;
-
-  console.log({ generalData });
-
-  const logos = generalData?.Logos.split(',')
-
+  const logos = details?.Logos.split(',')
 
   const showContent = () => {
     switch (step) {
       case 1:
         return (
           <div className="px-4">
-            <h1 className="text-2xl font-bold">What's the problem?</h1>
+            <h1 className="text-2xl font-medium">What's the problem?</h1>
             <h2 className="text-xl font-light">
               Select 1 or more options to see what local support is available
             </h2>
             <Checkboxes
-              options={step1}
+              options={step1[locale] || step1.en}
               selected={step1Selected}
               updateSelected={(id, value) =>
                 setStep1Selected((prevSelec) => {
@@ -105,30 +50,47 @@ const Leaflet = ({ records, step2Options, general, view }) => {
       case 2:
         return (
           <div className="px-4">
-            <h1 className="text-2xl font-bold">What are some options?</h1>
+            <h1 className="text-2xl font-medium">What are some options?</h1>
             <h2 className="text-xl font-light">
               Click on an option to see who to contact for advice and support on
               these options
             </h2>
-            {step2Options
-              .filter((item) =>
-                item.fields?.Option1?.some((key) =>
-                  step1Selected?.includes(key)
+            <div className="space-y-4 mt-4">
+              {step2Options
+                .filter((item) =>
+                  item.fields?.Option1?.some((key) =>
+                    step1Selected?.includes(key)
+                  )
                 )
-              )
-              .map((item) => (
-                <div>{item.fields?.Title}</div>
-              ))}
+                .map((item) => (
+                  <Card
+                    details={item.fields}
+                    clickable
+                    handleCardClick={() => {
+                      setStep2Selected(item.fields.Title);
+                      setStep((oldStep) => {
+                        return oldStep + 1;
+                      });
+                    }}
+                  />
+                ))}
+            </div>
           </div>
         );
       case 3:
         return (
-          <div>
-            <h1 className="text-2xl font-bold">Where can I get help?</h1>
+          <div className="px-4">
+            <h1 className="text-2xl font-medium">Where can I get help?</h1>
             <h2 className="text-xl font-light">
-              Each of these services offer free and confidential advice on the
-              options highlighted above
+              Each of these services offer free and confidential advice
             </h2>
+            <div className="space-y-4 mt-4">
+              {records
+                .filter((item) => item.fields?.Option2?.includes(step2Selected))
+                .map((item) => (
+                  <Card details={item.fields} />
+                ))}
+            </div>
           </div>
         );
       default:
@@ -140,7 +102,7 @@ const Leaflet = ({ records, step2Options, general, view }) => {
     <>
       <Head>
         <link rel="icon" href="/favicon.png" />
-        <title>Sheffield - Worried about Money?</title>
+        <title>{details?.Title} - Worried about Money?</title>
         <meta
           name="description"
           content="Worrying About Money? Advice and support is available in Sheffield if you’re struggling to make ends meet"
@@ -170,16 +132,39 @@ const Leaflet = ({ records, step2Options, general, view }) => {
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
       </Head>
-      <Pagination step={step} setStep={setStep} step1Selected={step1Selected}>
+      <Pagination
+        header={
+          <>
+            <h1 className="text-3xl font-medium pt-4 pb-2">
+              Worrying About Money?
+            </h1>
+            <h2 className="text-lg font-light  mb-2">
+              Advice and support is available in {details?.Title} if you’re
+              struggling to make ends meet
+            </h2>
+          </>
+        }
+        step={step}
+        setStep={setStep}
+        step1Selected={step1Selected}
+      >
         <>
           {showContent()}
-          <footer className="w-full flex flex-col justify-center items-center text-sm text-gray-700 p-2 mt-5 py-3 bg-gray-50">
+          <footer className="w-full flex flex-col justify-center items-center text-sm text-gray-700 p-2 mt-5 ">
             <div>
-              Powered by <span className="font-pacifico">Time to Spare</span>
+              Powered by{" "}
+              <a
+                href="https://timetospare.com"
+                rel="noopener noreferrer"
+                target="_blank"
+                className="font-pacifico"
+              >
+                Time to Spare
+              </a>
             </div>
             {logos?.length > 0 && (
               <div className="flex flex-col md:flex justify-center items-center mt-4">
-                <h3 className="mb-2 self-start">Supported by</h3>
+                <h3 className="mb-2 ">Supported by</h3>
                 <div className="flex flex-wrap justify-center items-center">
                   {logos.map((src, i) => {
                     return (
@@ -207,15 +192,12 @@ export async function getStaticProps(context) {
 
   const [records, step2Options, general] = await Promise.allSettled(promises);
 
-  console.log("status", general);
-
   return {
     props: {
       records: records.status === "fulfilled" ? records.value : [],
       step2Options:
         step2Options.status === "fulfilled" ? step2Options.value : [],
       general: general.status === "fulfilled" ? general.value : [],
-      view,
     },
     // Next.js will attempt to re-generate the page:
     // - When a request comes in
