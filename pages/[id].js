@@ -150,7 +150,7 @@ const Leaflet = ({ records, step2Options, general }) => {
       >
         <>
           {showContent()}
-          <footer className="w-full flex flex-col justify-center items-center text-sm text-gray-700 p-2 mt-5 ">
+          <footer className="w-full flex flex-col justify-center items-center text-sm text-gray-700 p-2 mt-8 ">
             <div>
               Powered by{" "}
               <a
