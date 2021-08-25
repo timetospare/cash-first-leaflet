@@ -1,29 +1,31 @@
-# Next.js + Tailwind CSS Example
+# Cash First Information Leaflets
 
-This example shows how to use [Tailwind CSS](https://tailwindcss.com/) [(v2.2)](https://blog.tailwindcss.com/tailwindcss-2-2) with Next.js. It follows the steps outlined in the official [Tailwind docs](https://tailwindcss.com/docs/guides/nextjs).
-
-It uses the new [`Just-in-Time Mode`](https://tailwindcss.com/docs/just-in-time-mode) for Tailwind CSS.
+This website shows details of cash-first support available in various different areas.
 
 ## Preview
 
-Preview the example live on [StackBlitz](http://stackblitz.com/):
+Preview the Sheffield example live: https://cash-first-leaflet.vercel.app/sheffield
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/with-tailwindcss)
+## Edit content
 
-## Deploy your own
+This website relies on an Airtable base to display content of services available.
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
+Please contact IFAN if any contact is inaccurate or out of date, or if you can help with translations.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-tailwindcss&project-name=with-tailwindcss&repository-name=with-tailwindcss)
+## How to make changes to content
 
-## How to use
+**Do not** change the names of the fields or the tables in Airtable. This **_will_** cause the site to break.
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
+To add content in new languages, append the 2 letter language code to the end of a new field name, e.g. `Description-fr` for the Description in French. This can be done on all the bases.
 
-```bash
-npx create-next-app --example with-tailwindcss with-tailwindcss-app
-# or
-yarn create next-app --example with-tailwindcss with-tailwindcss-app
-```
+To add new services, add them to the "Step 3" table, make sure to fill out the "Option 2" field - this determines whether they will show up depending on what the user selects in step 1 and 2.
 
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+To add a new location, add a new row to the "General" table. The "Step 2" and "Step 3" tables will then give you the option to connect to this new location. On "Step 2" and "Step 3", you will also need to create a new "View". It's important that you name this view the same as the location - this is also case sensitive. (For spaces, e.g. "Tower Hamlets", replace the space with a "-", ie: "tower-hamlets").
+
+e.g. To create "Doncaster", add a new row in General with "doncaster" as the "Location" field. Then create a view on both the Step 2 and Step 3 tables called "doncaster".
+
+You will then be able to view the Doncaster leaflet by visiting `website/doncaster`
+
+You can link entries in the Step 2 and Step 3 tables to more than one location. This is useful for example if you have a national service (e.g. Shelter). Instead of duplicating the row, you can just attach it to more different areas.
+
+
