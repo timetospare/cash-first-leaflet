@@ -28,4 +28,21 @@ You will then be able to view the Doncaster leaflet by visiting `website/doncast
 
 You can link entries in the Step 2 and Step 3 tables to more than one location. This is useful for example if you have a national service (e.g. Shelter). Instead of duplicating the row, you can just attach it to more different areas.
 
+## Language codes:
+
+`
+  const languageNames = {
+    en: "English",
+    fr: "French",
+    bn: "Bengali",
+    ur: "Urdu",
+    ar: "Arabic",
+    pl: "Polish",
+    ro: "Romanian",
+    fa: "Farsi",
+    sk: "Slovakian",
+    gd: "Gaelic",
+    bg: "Bulgarian",
+  };
+`
 
