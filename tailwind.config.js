@@ -4,7 +4,12 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     fontFamily: { pacifico: "Pacifico" },
-    extend: {},
+    extend: {
+      colors: {
+        primary: "#7587a7",
+        secondary: "#ccded7",
+      },
+    },
   },
   variants: {
     extend: {},

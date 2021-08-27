@@ -20,7 +20,7 @@ const Card = ({ details, clickable, handleCardClick, content, rtl }) => {
   const contents = (
     <>
       <h1
-        className={`text-lg font-medium py-2 border-b border-gray-300 bg-gray-50 px-4 ${
+        className={`text-lg font-medium py-2 border-b border-gray-300 bg-secondary px-4 ${
           rtl ? "text-right" : "text-left"
         }`}
       >
@@ -46,7 +46,7 @@ const Card = ({ details, clickable, handleCardClick, content, rtl }) => {
       <button
         className={` mt-4 ${
           rtl ? "self-start ml-2" : "self-end mr-2"
-        } border bg-none bg-indigo-600 hover:bg-indigo-700 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 text-sm rounded-full px-3 py-2`}
+        } border bg-none bg-primary hover:bg-indigo-700 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 text-sm rounded-full px-3 py-2`}
         onClick={(e) => {
           e.stopPropagation();
           handleCardClick();
