@@ -165,39 +165,34 @@ const Leaflet = ({ records, step2Options, general, content }) => {
     }
   };
 
+  const title = details?.[`Title-${locale}`] || details?.["Title"];
+
   return (
     <>
       <Head>
         <link rel="icon" href="/favicon.png" />
-        <title>{details?.Title} - Worried about Money?</title>
+        <title>{title} - Worried about Money?</title>
         <meta
           name="description"
-          content="Worrying About Money? Advice and support is available in Sheffield if you’re struggling to make ends meet"
+          content={`Worrying About Money? Advice and support is available in ${title} if you’re struggling to make ends meet`}
         />
         <meta
           property="og:url"
-          content="https://findfood.camden.gov.uk/camden-food"
+          content={`https://worryingaboutmoney.co.uk/${id}`}
         />
-        <meta property="og:title" content="Sheffield - Worried about Money?" />
+        <meta property="og:title" content={`${title} - Worried about Money?`} />
         <meta
           property="og:description"
-          content="Worrying About Money? Advice and support is available in Sheffield if you’re struggling to make ends meet"
+          content={`Worrying About Money? Advice and support is available in ${title} if you’re struggling to make ends meet`}
         />
         <meta
           property="twitter:title"
-          content="Sheffield - Worried about Money?"
+          content={`${title} - Worried about Money?`}
         />
         <meta name="twitter:card" content="summary_large_image" />
-        {/*
-          <meta
-          name="twitter:image"
-          content="https://i.ibb.co/HDff9SP/find-food-twitter.png"
-        />
-        <meta
-          property="og:image"
-          content="https://i.ibb.co/HDff9SP/find-food-twitter.png"
-        />
-          */}
+
+        <meta name="twitter:image" content={details?.["Social Image"]} />
+        <meta property="og:image" content={details?.["Social Image"]} />
 
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
@@ -229,7 +224,7 @@ const Leaflet = ({ records, step2Options, general, content }) => {
           <footer className="w-full flex flex-col justify-center items-center text-sm text-gray-700 p-2 mt-8 ">
             {logos?.length > 0 && (
               <div className="flex flex-col md:flex justify-center items-center mb-8">
-                <h3 className="mb-2 text-lg font-medium mb-2">Supported by</h3>
+                <h3 className="mb-2 text-lg font-medium">Supported by</h3>
                 <div className="flex flex-wrap justify-center items-center">
                   {logos.map((src, i) => {
                     return (
