@@ -19,7 +19,7 @@ const Checkboxes = ({ options, selected, updateSelected, rtl }) => {
                   aria-describedby="candidates-description"
                   name={opt.id}
                   type="checkbox"
-                  className="focus:ring-indigo-500 h-8 w-8 text-indigo-600 border-gray-300 rounded"
+                  className="focus:ring-indigo-500 h-8 w-8 text-primary border-gray-300 rounded"
                 />
               </div>
             )}
@@ -48,7 +48,7 @@ const Checkboxes = ({ options, selected, updateSelected, rtl }) => {
                   aria-describedby="candidates-description"
                   name={opt.id}
                   type="checkbox"
-                  className="focus:ring-indigo-500 h-8 w-8 text-indigo-600 border-gray-300 rounded"
+                  className="focus:ring-indigo-500 h-8 w-8 text-primary border-gray-300 rounded"
                 />
               </div>
             )}
