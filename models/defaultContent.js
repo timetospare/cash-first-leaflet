@@ -38,6 +38,7 @@ const defaultContent = {
   step3OtherHeading: { "text-en": "Other support:" },
   nextButton: { "text-en": "Next" },
   backButton: { "text-en": "Back" },
+  mainTitle: { "text-en": "IFAN - Cash First Referral Leaflets" },
 };
 
 export default defaultContent;

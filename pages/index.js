@@ -1,17 +1,24 @@
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import defaultContent from "../models/defaultContent";
+import contentAPI from "./api/content";
 import generalAPI from "./api/general";
 
-const Home = ({ areas }) => {
+const Home = ({ areas, content }) => {
+  const { locale } = useRouter();
+
   return (
     <div className="min-h-screen py-2">
       <Head>
-        <title>Cash First Leaflet</title>
+        <title>
+          {content.mainTitle[`text-${locale}`] || content.mainTitle[`text-en`]}
+        </title>
         <link rel="icon" href="/favicon.png" />
       </Head>
       <div className="w-full max-w-6xl mx-auto px-2">
         <h1 className="text-3xl my-6 font-medium">
-          IFAN - Cash First Leaflets
+          {content.mainTitle[`text-${locale}`] || content.mainTitle[`text-en`]}
         </h1>
         <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4">
           {areas.map((area) => (
@@ -38,11 +45,22 @@ const Home = ({ areas }) => {
 };
 
 export async function getStaticProps() {
-  const areas = await generalAPI("Grid view");
+  const promises = [generalAPI("Grid view"), contentAPI("Grid view")];
+
+  const [areas, content] = await Promise.allSettled(promises);
 
   return {
     props: {
-      areas: areas?.map((ar) => ar.fields) || [],
+      areas:
+        areas.status === "fulfilled" ? areas.value?.map((ar) => ar.fields) : [],
+      content:
+        content.status === "fulfilled"
+          ? content.value?.reduce((obj, item) => {
+              const { content, ...rest } = item.fields;
+              obj[content] = rest;
+              return obj;
+            }, {})
+          : defaultContent,
     },
     // Next.js will attempt to re-generate the page:
     // - When a request comes in
