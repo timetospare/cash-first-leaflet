@@ -240,7 +240,20 @@ const Leaflet = ({ records, step2Options, general, content }) => {
               </div>
             )}
             <div className="text-center">
-              Powered by{" "}
+              <div className="pt-2">
+                Find out more about 'Worrying About Money?' leaflets at
+                <br />
+                <a
+                  href="https://www.foodaidnetwork.org.uk/cash-first-leaflets"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  className="underline"
+                >
+                  www.foodaidnetwork.org.uk/cash-first-leaflets
+                </a>
+              </div>{" "}
+              <br />
+              With thanks to{" "}
               <a
                 href="https://timetospare.com"
                 rel="noopener noreferrer"
@@ -249,18 +262,7 @@ const Leaflet = ({ records, step2Options, general, content }) => {
               >
                 Time to Spare
               </a>
-              . <br />
-              <div className="pt-2">
-                Find out more{" "}
-                <a
-                  href="https://www.foodaidnetwork.org.uk/cash-first-leaflets"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  className="underline"
-                >
-                  here.
-                </a>
-              </div>
+              .
             </div>
           </footer>
         </>
