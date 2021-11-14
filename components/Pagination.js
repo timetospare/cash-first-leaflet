@@ -53,7 +53,7 @@ export const Pagination = ({
 
   return (
     <div className="h-full flex flex-col justify-between">
-      <div className="overflow-auto bg-gray-50" ref={parentEl}>
+      <div className="overflow-auto bg-secondary" ref={parentEl}>
         <div className="mx-auto max-w-2xl md:px-6 px-2  pb-4 bg-white">
           {header}
           <div className="w-full flex flex-row justify-center border-t border-b items-center text-white space-x-6 p-2 md:p-4 mb-8 mt-4">
