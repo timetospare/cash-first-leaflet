@@ -19,6 +19,8 @@ const Leaflet = ({ records, step2Options, general, content }) => {
 
   const rtl = rtlLanguages.includes(locale);
 
+  console.log({ step2Options });
+
   const details =
     general?.find((item) => item?.fields?.Location === id)?.fields || {};
 

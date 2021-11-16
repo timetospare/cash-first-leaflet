@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import ReactMarkdown from "react-markdown";
 
 const formatUrl = (url) => {
   if (!url) {
@@ -31,7 +32,36 @@ const Card = ({ details, clickable, handleCardClick, content, rtl }) => {
           rtl ? "text-right" : "text-left"
         }`}
       >
-        {details[`Description-${locale}`] || details.Description}
+        <ReactMarkdown
+          components={{
+            // Map `h1` (`# heading`) to use `h2`s.
+            a: ({ node, ...props }) => (
+              <a
+                className="underline text-primary hover:text-blue-800"
+                onClick={(e) => {
+                  // e.preventDefault();
+                  e.stopPropagation();
+                }}
+                target="_blank"
+                rel="noopener noreferrer"
+                {...props}
+              />
+            ),
+          }}
+          className="markdown space-y-4"
+          children={details[`Description-${locale}`] || details.Description}
+        />
+        <style jsx global>
+          {`
+            .markdown a {
+              text-decoration: underline !important;
+            }
+
+            .markdown p {
+              margin: 8px 0px !important;
+            }
+          `}
+        </style>
       </p>
     </>
   );
