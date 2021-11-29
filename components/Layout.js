@@ -33,7 +33,7 @@ export const Layout = ({ children }) => {
           rel="noopener noreferrer"
           target="_blank"
         >
-          <img src="/logo.webp" className="h-8 w-auto"></img>
+          <img src="/logo.webp" alt="IFAN logo" className="h-8 w-auto"></img>
         </a>
         <div className="flex items-center">
           <form>

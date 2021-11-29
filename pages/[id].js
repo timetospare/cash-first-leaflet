@@ -55,6 +55,7 @@ const Leaflet = ({ records, step2Options, general, content }) => {
   };
 
   const logos = details?.Logos?.split(",") || [];
+  const logosAltText = details?.["Logos Alt Text"]?.split(",") || [];
 
   const showContent = () => {
     switch (step) {
@@ -234,7 +235,7 @@ const Leaflet = ({ records, step2Options, general, content }) => {
                         className="w-20 h-16 object-contain mr-2"
                         src={src}
                         key={i}
-                        alt=""
+                        alt={logosAltText?.[i] || ""}
                       />
                     );
                   })}
