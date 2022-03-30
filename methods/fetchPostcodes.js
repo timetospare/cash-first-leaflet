@@ -34,7 +34,6 @@ const fetchSuggestedPostcodes = (props) => {
   } else if (searchText) {
     // setPostcodeError('');
     return getPostcodeSuggestions(searchText).then((data) => {
-      console.log({ data });
       if (data.data !== null) {
         return data.data.postcode.suggest;
       } else {

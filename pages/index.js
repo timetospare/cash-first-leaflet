@@ -29,9 +29,6 @@ const Home = ({ areas, content }) => {
       ]
     : areas;
 
-  console.log({ postcodeObj });
-  console.log({ areas });
-
   return (
     <div className="min-h-screen py-2">
       <Head>

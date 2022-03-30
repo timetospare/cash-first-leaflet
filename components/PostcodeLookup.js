@@ -29,15 +29,17 @@ export default function PostcodeLookup({ handleSearch }) {
 
   useEffect(() => {
     if (query) {
-      fetchSuggestedPostcodes({ searchText: query }).then((data) => {
-        setPostcodes(data);
-      });
+      fetchSuggestedPostcodes({ searchText: query })
+        .then((data) => {
+          setPostcodes(data);
+        })
+        .catch((err) => {
+          //swallow error
+        });
     } else {
       setSelected(null);
     }
   }, [query]);
-
-  console.log({ postcodes });
 
   const filteredPeople =
     query === ""
