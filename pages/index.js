@@ -1,12 +1,33 @@
 import Head from "next/head";
+import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import PostcodeLookup from "../components/PostcodeLookup";
 import defaultContent from "../models/defaultContent";
 import contentAPI from "./api/content";
 import generalAPI from "./api/general";
 
 const Home = ({ areas, content }) => {
   const { locale } = useRouter();
+
+  const [postcodeObj, setPostcodeObj] = useState(null);
+
+  const filteredAreas = postcodeObj
+    ? [
+        areas[0],
+        ...areas.filter((area) =>
+          area.Title?.replace(new RegExp("&", "g"), "")
+            .replace(new RegExp("and", "g"), "")
+            .toLowerCase()
+            .includes(
+              postcodeObj.names?.laua
+                .replace(new RegExp("&", "g"), "")
+                .replace(new RegExp("and", "g"), "")
+                .toLowerCase()
+            )
+        ),
+      ]
+    : areas;
 
   return (
     <div className="min-h-screen py-2">
@@ -20,9 +41,10 @@ const Home = ({ areas, content }) => {
         <h1 className="text-3xl my-6 font-medium">
           {content.mainTitle[`text-${locale}`] || content.mainTitle[`text-en`]}
         </h1>
+        <PostcodeLookup handleSearch={(obj) => setPostcodeObj(obj)} />
         <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4">
-          {areas.map((area) => (
-            <Link href={`/${area?.Location}`}>
+          {filteredAreas.map((area) => (
+            <Link href={`/${area?.Location}`} key={area?.Title}>
               <a className="relative rounded-xl overflow-hidden bg-primary hover:opacity-90 ">
                 <img
                   src={area?.["Social Image"]}
