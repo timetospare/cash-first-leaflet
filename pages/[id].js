@@ -11,7 +11,7 @@ import contentAPI from "./api/content";
 import step1 from "../models/step1";
 import defaultContent from "../models/defaultContent";
 
-const rtlLanguages = ["ur", "fa", "ar"];
+const rtlLanguages = ["ur", "fa", "ar", "ps"];
 
 const Leaflet = ({ records, step2Options, general, content }) => {
   const { query, locale } = useRouter();
