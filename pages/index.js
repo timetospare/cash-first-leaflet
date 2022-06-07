@@ -6,6 +6,7 @@ import PostcodeLookup from "../components/PostcodeLookup";
 import defaultContent from "../models/defaultContent";
 import contentAPI from "./api/content";
 import generalAPI from "./api/general";
+import ReactMarkdown from "react-markdown";
 
 const Home = ({ areas, content }) => {
   const { locale } = useRouter();
@@ -29,6 +30,8 @@ const Home = ({ areas, content }) => {
       ]
     : areas;
 
+  console.log(JSON.stringify(content.mainDescription));
+
   return (
     <div className="min-h-screen py-2">
       <Head>
@@ -41,6 +44,24 @@ const Home = ({ areas, content }) => {
         <h1 className="text-3xl my-6 font-medium">
           {content.mainTitle[`text-${locale}`] || content.mainTitle[`text-en`]}
         </h1>
+        <ReactMarkdown
+          components={{
+            // Map `h1` (`# heading`) to use `h2`s.
+            a: ({ node, ...props }) => (
+              <a
+                className="underline text-primary hover:text-blue-800"
+                target="_blank"
+                rel="noopener noreferrer"
+                {...props}
+              />
+            ),
+          }}
+          className="markdown space-y-4 max-w-4xl whitespace-pre-line mb-8"
+          children={
+            content.mainDescription[`text-${locale}`] ||
+            content.mainDescription["text-en"]
+          }
+        />
         <PostcodeLookup handleSearch={(obj) => setPostcodeObj(obj)} />
         <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4">
           {filteredAreas.map((area) => (
@@ -62,6 +83,17 @@ const Home = ({ areas, content }) => {
           ))}
         </div>
       </div>
+      <style jsx global>
+        {`
+          .markdown a {
+            text-decoration: underline !important;
+          }
+
+          .markdown p {
+            margin: 8px 0px !important;
+          }
+        `}
+      </style>
     </div>
   );
 };
