@@ -10,6 +10,7 @@ import generalAPI from "./api/general";
 import contentAPI from "./api/content";
 import step1 from "../models/step1";
 import defaultContent from "../models/defaultContent";
+import ReactMarkdown from "react-markdown";
 
 const rtlLanguages = ["ur", "fa", "ar", "ps"];
 
@@ -225,8 +226,32 @@ const Leaflet = ({ records, step2Options, general, content }) => {
         <>
           {showContent()}
           <footer className="w-full flex flex-col justify-center items-center text-sm text-gray-700 p-2 mt-8 ">
+            <ReactMarkdown
+              components={{
+                // Map `h1` (`# heading`) to use `h2`s.
+                a: ({ node, ...props }) => (
+                  <a
+                    className="underline text-primary hover:text-blue-800"
+                    onClick={(e) => {
+                      // e.preventDefault();
+                      e.stopPropagation();
+                    }}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    {...props}
+                  />
+                ),
+              }}
+              className="markdown space-y-4"
+              children={
+                details?.[`FooterContent-${locale}`] ||
+                details?.["FooterContent"] ||
+                null
+              }
+            />
+
             {logos?.length > 0 && (
-              <div className="flex flex-col md:flex justify-center items-center mb-8">
+              <div className="flex flex-col md:flex justify-center items-center mb-8 mt-4">
                 <h3 className="mb-2 text-lg font-medium">Supported by</h3>
                 <div className="flex flex-wrap justify-center items-center">
                   {logos.map((src, i) => {
