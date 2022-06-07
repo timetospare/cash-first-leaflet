@@ -14,6 +14,10 @@ const languageNames = {
   sk: "Slovakian",
   gd: "Gaelic",
   bg: "Bulgarian",
+  ps: "Pashto",
+  ae: "Ukrainian",
+  zh: "Chinese (简单)",
+  "zh-CHT": "Chinese (繁體)",
 };
 
 export const Layout = ({ children }) => {
