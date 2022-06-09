@@ -28,6 +28,8 @@ You will then be able to view the Doncaster leaflet by visiting `website/doncast
 
 You can link entries in the Step 2 and Step 3 tables to more than one location. This is useful for example if you have a national service (e.g. Shelter). Instead of duplicating the row, you can just attach it to more different areas.
 
+To add links to the top of the page (e.g. to the leaflet, poster or translations of these), add a row to the "Links" table. Make sure the "Name" field is the same as the other tables (e.g. "angus", "aberdeen", "tower-hamlets" etc). Each column in this table (if a value exists) will show up as a link button. The text on this button will be the column title (e.g "Poster" or "Leaflet"), and the link it goes to will be the value in the cell. Each link will open in a new tab.
+
 ## Language codes:
 
 `const languageNames = { en: "English", es: "Spanish", fr: "French", bn: "Bengali", ur: "Urdu", ar: "Arabic", pl: "Polish", ro: "Romanian", fa: "Farsi", sk: "Slovakian", gd: "Gaelic", bg: "Bulgarian", ps: "Pashto", ae: "Ukrainian", zh: "Chinese (简单)", "zh-CHT": "Chinese (繁體)", };`
