@@ -11,16 +11,24 @@ import contentAPI from "./api/content";
 import step1 from "../models/step1";
 import defaultContent from "../models/defaultContent";
 import ReactMarkdown from "react-markdown";
+import linksAPI from "./api/links";
+import convertLink from "../methods/convertLink";
+import { LinkIcon } from "@heroicons/react/solid";
 
 const rtlLanguages = ["ur", "fa", "ar", "ps"];
 
-const Leaflet = ({ records, step2Options, general, content }) => {
+const Leaflet = ({ records, step2Options, general, content, links }) => {
   const { query, locale } = useRouter();
   const { id } = query;
 
   const rtl = rtlLanguages.includes(locale);
 
-  console.log({ step2Options });
+  console.log({ links });
+
+  const { Name, ...relevantLinks } =
+    links?.find((item) => item?.fields?.Name === id)?.fields || {};
+
+  console.log({ relevantLinks });
 
   const details =
     general?.find((item) => item?.fields?.Location === id)?.fields || {};
@@ -217,6 +225,21 @@ const Leaflet = ({ records, step2Options, general, content }) => {
                 </>
               )}
             </h2>
+            {Object.keys(relevantLinks).length ? (
+              <div className="md:flex flex-wrap pt-2 hidden ">
+                {Object.keys(relevantLinks).map((key) => (
+                  <a
+                    target="_blank"
+                    href={convertLink(relevantLinks[key])}
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center mr-2 mb-2 rounded-full font-medium text-md hover:shadow-md bg-secondary text-green-900 py-1.5 px-4"
+                  >
+                    <LinkIcon className="h-4 w-4 mr-2" />
+                    {key}
+                  </a>
+                ))}
+              </div>
+            ) : null}
           </div>
         }
         step={step}
@@ -306,15 +329,16 @@ export async function getStaticProps(context) {
     step2API(view),
     generalAPI("Grid view"),
     contentAPI("Grid view"),
+    linksAPI("Grid view"),
   ];
 
-  const [records, step2Options, general, content] = await Promise.allSettled(
-    promises
-  );
+  const [records, step2Options, general, content, links] =
+    await Promise.allSettled(promises);
 
   return {
     props: {
       records: records.status === "fulfilled" ? records.value : [],
+      links: links.status === "fulfilled" ? links.value : [],
       step2Options:
         step2Options.status === "fulfilled" ? step2Options.value : [],
       general: general.status === "fulfilled" ? general.value : [],
