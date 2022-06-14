@@ -15,7 +15,7 @@ const languageNames = {
   gd: "Gaelic",
   bg: "Bulgarian",
   ps: "Pashto",
-  ae: "Ukrainian",
+  ua: "Ukrainian",
   zh: "Chinese (简单)",
   "zh-CHT": "Chinese (繁體)",
 };
