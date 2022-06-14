@@ -14,7 +14,7 @@ module.exports = {
       "gd",
       "bg",
       "ps",
-      "ae",
+      "ua",
       "zh",
       "zh-CHT",
     ],
