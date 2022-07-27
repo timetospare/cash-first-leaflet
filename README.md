@@ -30,4 +30,4 @@ You can link entries in the Step 2 and Step 3 tables to more than one location. 
 
 ## Language codes:
 
-`const languageNames = { en: "English", es: "Spanish", fr: "French", bn: "Bengali", ur: "Urdu", ar: "Arabic", pl: "Polish", ro: "Romanian", fa: "Farsi", sk: "Slovakian", gd: "Gaelic", bg: "Bulgarian", ps: "Pashto", ae: "Ukrainian", zh: "Chinese (简单)", "zh-CHT": "Chinese (繁體)", };`
+`const languageNames = { en: "English", es: "Spanish", fr: "French", bn: "Bengali", ur: "Urdu", ar: "Arabic", pl: "Polish", ro: "Romanian", fa: "Farsi", sk: "Slovakian", gd: "Gaelic", bg: "Bulgarian", ps: "Pashto", ua: "Ukrainian", zh: "Chinese (简单)", "zh-CHT": "Chinese (繁體)", };`
