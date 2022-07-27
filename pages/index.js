@@ -8,8 +8,8 @@ import contentAPI from "./api/content";
 import generalAPI from "./api/general";
 
 const Home = ({ areas, content }) => {
-  const { locale } = useRouter();
-
+  const { locale, query } = useRouter();
+  const { embed } = query;
   const [postcodeObj, setPostcodeObj] = useState(null);
 
   const filteredAreas = postcodeObj
@@ -43,9 +43,15 @@ const Home = ({ areas, content }) => {
         </h1>
         <PostcodeLookup handleSearch={(obj) => setPostcodeObj(obj)} />
         <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4">
-          {filteredAreas.map((area) => (
-            <Link href={`/${area?.Location}`} key={area?.Title}>
-              <a className="relative rounded-xl overflow-hidden bg-primary hover:opacity-90 ">
+          {filteredAreas.map((area) =>
+            embed ? (
+              <a
+                href={`/${area?.Location}`}
+                key={area?.Title}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative rounded-xl overflow-hidden bg-primary hover:opacity-90 "
+              >
                 <img
                   src={area?.["Social Image"]}
                   className="h-64 w-full object-cover hover:scale-110 transition-all"
@@ -58,8 +64,24 @@ const Home = ({ areas, content }) => {
                   {area?.Title}
                 </h2>
               </a>
-            </Link>
-          ))}
+            ) : (
+              <Link href={`/${area?.Location}`} key={area?.Title}>
+                <a className="relative rounded-xl overflow-hidden bg-primary hover:opacity-90 ">
+                  <img
+                    src={area?.["Social Image"]}
+                    className="h-64 w-full object-cover hover:scale-110 transition-all"
+                  />
+                  <div
+                    style={{ height: "50%" }}
+                    className="from-white opacity-50 to-black bg-gradient-to-b bottom-0 absolute z-10"
+                  />
+                  <h2 className="absolute bottom-0 left-0 mx-4 my-4 text-white z-20 font-medium text-xl">
+                    {area?.Title}
+                  </h2>
+                </a>
+              </Link>
+            )
+          )}
         </div>
       </div>
     </div>

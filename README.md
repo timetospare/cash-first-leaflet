@@ -32,4 +32,4 @@ To add links to the top of the page (e.g. to the leaflet, poster or translations
 
 ## Language codes:
 
-`const languageNames = { en: "English", es: "Spanish", fr: "French", bn: "Bengali", ur: "Urdu", ar: "Arabic", pl: "Polish", ro: "Romanian", fa: "Farsi", sk: "Slovakian", gd: "Gaelic", bg: "Bulgarian", ps: "Pashto", ae: "Ukrainian", zh: "Chinese (简单)", "zh-CHT": "Chinese (繁體)", };`
+`const languageNames = { en: "English", es: "Spanish", fr: "French", bn: "Bengali", ur: "Urdu", ar: "Arabic", pl: "Polish", ro: "Romanian", fa: "Farsi", sk: "Slovakian", gd: "Gaelic", bg: "Bulgarian", ps: "Pashto", ua: "Ukrainian", zh: "Chinese (简单)", "zh-CHT": "Chinese (繁體)", };`
