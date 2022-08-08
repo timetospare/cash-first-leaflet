@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import PostcodeLookup from "../components/PostcodeLookup";
 import defaultContent from "../models/defaultContent";
@@ -50,12 +51,16 @@ const Home = ({ areas, content }) => {
                 key={area?.Title}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="relative rounded-xl overflow-hidden bg-primary hover:opacity-90 "
+                className="relative rounded-xl block overflow-hidden bg-primary hover:opacity-90 "
               >
-                <img
-                  src={area?.["Social Image"]}
-                  className="h-64 w-full object-cover hover:scale-110 transition-all"
-                />
+                <div className="h-64 w-full hover:scale-110 transition-all">
+                  <Image
+                    alt=""
+                    layout="fill"
+                    src={area?.["Social Image"] || ""}
+                  />
+                </div>
+
                 <div
                   style={{ height: "50%" }}
                   className="from-white opacity-50 to-black bg-gradient-to-b bottom-0 absolute z-10"
@@ -66,11 +71,18 @@ const Home = ({ areas, content }) => {
               </a>
             ) : (
               <Link href={`/${area?.Location}`} key={area?.Title}>
-                <a className="relative rounded-xl overflow-hidden bg-primary hover:opacity-90 ">
-                  <img
-                    src={area?.["Social Image"]}
-                    className="h-64 w-full object-cover hover:scale-110 transition-all"
-                  />
+                <a className="relative block rounded-xl overflow-hidden bg-primary hover:opacity-90 ">
+                  <div className="h-64 w-full hover:scale-110 transition-all">
+                    {area?.["Social Image"] && (
+                      <Image
+                        className="h-64 w-full object-cover hover:scale-110 transition-all"
+                        alt=""
+                        layout="fill"
+                        src={area?.["Social Image"]}
+                      />
+                    )}
+                  </div>
+
                   <div
                     style={{ height: "50%" }}
                     className="from-white opacity-50 to-black bg-gradient-to-b bottom-0 absolute z-10"
