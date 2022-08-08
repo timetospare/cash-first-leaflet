@@ -56,6 +56,8 @@ const Home = ({ areas, content }) => {
                 <div className="h-64 w-full hover:scale-110 transition-all">
                   <Image
                     alt=""
+                    objectFit="cover"
+                    sizes="320 400 600"
                     layout="fill"
                     src={area?.["Social Image"] || ""}
                   />
@@ -77,6 +79,8 @@ const Home = ({ areas, content }) => {
                       <Image
                         className="h-64 w-full object-cover hover:scale-110 transition-all"
                         alt=""
+                        objectFit="cover"
+                        sizes="320 400 600"
                         layout="fill"
                         src={area?.["Social Image"]}
                       />
