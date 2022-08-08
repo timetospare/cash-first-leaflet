@@ -70,7 +70,7 @@ const Home = ({ areas, content }) => {
 
   console.log({ areas, filteredAreas });
 
-  const countries = ["UK", "England", "Wales", "Scotland"];
+  const countries = ["UK", "Scotland", "England", "Wales"];
   const countryAreas = groupArrayByValue(filteredAreas, "Country", countries);
 
   return (
@@ -89,6 +89,15 @@ const Home = ({ areas, content }) => {
           </h1>
           <PostcodeLookup handleSearch={(obj) => setPostcodeObj(obj)} />
         </div>
+        <div className="max-w-6xl px-2 mx-auto flex flex-wrap">
+          {countries.map((country) => (
+            <a href={`#${country}`} key={country} className="mr-2 mb-2">
+              <div className="bg-white border-2 text-primary border-primary hover:bg:gray-50 rounded-md hover:shadow-lg px-4 py-2">
+                <h2 className="text-lg font-medium">{country}</h2>
+              </div>
+            </a>
+          ))}
+        </div>
 
         {postcodeObj ? (
           <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4 max-w-6xl mx-auto px-2">
@@ -106,7 +115,10 @@ const Home = ({ areas, content }) => {
           <div>
             {countries.map((country) => (
               <>
-                <h1 className="bg-gray-50 border-t border-b border-gray-300 text-xl font-medium py-4 my-4">
+                <h1
+                  id={country}
+                  className="bg-gray-50 border-t border-b border-gray-300 text-xl font-medium py-4 my-4"
+                >
                   <div className="max-w-6xl mx-auto px-2">{country}</div>
                 </h1>
                 <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4 max-w-6xl mx-auto px-2">
