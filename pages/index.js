@@ -8,6 +8,44 @@ import defaultContent from "../models/defaultContent";
 import contentAPI from "./api/content";
 import generalAPI from "./api/general";
 
+const groupArrayByValue = (array, key, values) => {
+  const grouped = {};
+  values.forEach((value) => {
+    grouped[value] = array.filter((item) => item[key] === value);
+  });
+  return grouped;
+};
+
+const GridSquare = ({ area, embed }) => {
+  return (
+    <a
+      href={`/${area?.Location}`}
+      key={area?.Title}
+      target={embed ? "_blank" : ""}
+      rel={embed && "noopener noreferrer"}
+      className="relative rounded-xl block overflow-hidden bg-primary hover:opacity-90 "
+    >
+      <div className="h-64 w-full hover:scale-110 transition-all">
+        <Image
+          alt=""
+          objectFit="cover"
+          sizes="320 400 600"
+          layout="fill"
+          src={area?.["Social Image"] || ""}
+        />
+      </div>
+
+      <div
+        style={{ height: "50%" }}
+        className="from-white opacity-50 to-black bg-gradient-to-b bottom-0 absolute z-10"
+      />
+      <h2 className="absolute bottom-0 left-0 mx-4 my-4 text-white z-20 font-medium text-xl">
+        {area?.Title}
+      </h2>
+    </a>
+  );
+};
+
 const Home = ({ areas, content }) => {
   const { locale, query } = useRouter();
   const { embed } = query;
@@ -30,6 +68,11 @@ const Home = ({ areas, content }) => {
       ]
     : areas;
 
+  console.log({ areas, filteredAreas });
+
+  const countries = ["UK", "England", "Wales", "Scotland"];
+  const countryAreas = groupArrayByValue(filteredAreas, "Country", countries);
+
   return (
     <div className="min-h-screen py-2">
       <Head>
@@ -38,67 +81,49 @@ const Home = ({ areas, content }) => {
         </title>
         <link rel="icon" href="/favicon.png" />
       </Head>
-      <div className="w-full max-w-6xl mx-auto px-2">
-        <h1 className="text-3xl my-6 font-medium">
-          {content.mainTitle[`text-${locale}`] || content.mainTitle[`text-en`]}
-        </h1>
-        <PostcodeLookup handleSearch={(obj) => setPostcodeObj(obj)} />
-        <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4">
-          {filteredAreas.map((area) =>
-            embed ? (
-              <a
-                href={`/${area?.Location}`}
-                key={area?.Title}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="relative rounded-xl block overflow-hidden bg-primary hover:opacity-90 "
-              >
-                <div className="h-64 w-full hover:scale-110 transition-all">
-                  <Image
-                    alt=""
-                    objectFit="cover"
-                    sizes="320 400 600"
-                    layout="fill"
-                    src={area?.["Social Image"] || ""}
-                  />
-                </div>
-
-                <div
-                  style={{ height: "50%" }}
-                  className="from-white opacity-50 to-black bg-gradient-to-b bottom-0 absolute z-10"
-                />
-                <h2 className="absolute bottom-0 left-0 mx-4 my-4 text-white z-20 font-medium text-xl">
-                  {area?.Title}
-                </h2>
-              </a>
-            ) : (
-              <Link href={`/${area?.Location}`} key={area?.Title}>
-                <a className="relative block rounded-xl overflow-hidden bg-primary hover:opacity-90 ">
-                  <div className="h-64 w-full hover:scale-110 transition-all">
-                    {area?.["Social Image"] && (
-                      <Image
-                        className="h-64 w-full object-cover hover:scale-110 transition-all"
-                        alt=""
-                        objectFit="cover"
-                        sizes="320 400 600"
-                        layout="fill"
-                        src={area?.["Social Image"]}
-                      />
-                    )}
-                  </div>
-
-                  <div
-                    style={{ height: "50%" }}
-                    className="from-white opacity-50 to-black bg-gradient-to-b bottom-0 absolute z-10"
-                  />
-                  <h2 className="absolute bottom-0 left-0 mx-4 my-4 text-white z-20 font-medium text-xl">
-                    {area?.Title}
-                  </h2>
-                </a>
-              </Link>
-            )
-          )}
+      <div className="w-full mx-auto">
+        <div className="max-w-6xl px-2 mx-auto">
+          <h1 className="text-3xl my-6 font-medium">
+            {content.mainTitle[`text-${locale}`] ||
+              content.mainTitle[`text-en`]}
+          </h1>
+          <PostcodeLookup handleSearch={(obj) => setPostcodeObj(obj)} />
         </div>
+
+        {postcodeObj ? (
+          <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4 max-w-6xl mx-auto px-2">
+            {filteredAreas.map((area) =>
+              embed ? (
+                <GridSquare area={area} embed />
+              ) : (
+                <Link href={`/${area?.Location}`} key={area?.Title}>
+                  <GridSquare area={area} />
+                </Link>
+              )
+            )}
+          </div>
+        ) : (
+          <div>
+            {countries.map((country) => (
+              <>
+                <h1 className="bg-gray-50 border-t border-b border-gray-300 text-xl font-medium py-4 my-4">
+                  <div className="max-w-6xl mx-auto px-2">{country}</div>
+                </h1>
+                <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4 max-w-6xl mx-auto px-2">
+                  {countryAreas[country].map((area) =>
+                    embed ? (
+                      <GridSquare area={area} embed />
+                    ) : (
+                      <Link href={`/${area?.Location}`} key={area?.Title}>
+                        <GridSquare area={area} />
+                      </Link>
+                    )
+                  )}
+                </div>
+              </>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
