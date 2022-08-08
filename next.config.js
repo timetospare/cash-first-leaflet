@@ -1,4 +1,7 @@
 module.exports = {
+  images: {
+    domains: ["uploads.strikinglycdn.com"],
+  },
   i18n: {
     locales: [
       "en",
