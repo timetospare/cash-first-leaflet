@@ -26,13 +26,15 @@ const GridSquare = ({ area, embed }) => {
       className="relative rounded-xl block overflow-hidden bg-primary hover:opacity-90 "
     >
       <div className="h-64 w-full hover:scale-110 transition-all">
-        <Image
-          alt=""
-          objectFit="cover"
-          sizes="320 400 600"
-          layout="fill"
-          src={area?.["Social Image"] || ""}
-        />
+        {area?.["Social Image"] && (
+          <Image
+            alt=""
+            objectFit="cover"
+            sizes="320 400 600"
+            layout="fill"
+            src={area?.["Social Image"] || ""}
+          />
+        )}
       </div>
 
       <div
@@ -68,9 +70,7 @@ const Home = ({ areas, content }) => {
       ]
     : areas;
 
-  console.log({ areas, filteredAreas });
-
-  const countries = ["UK", "Scotland", "England", "Wales"];
+  const countries = ["UK", "Scotland", "England", "Greater London", "Wales"];
   const countryAreas = groupArrayByValue(filteredAreas, "Country", countries);
 
   return (
