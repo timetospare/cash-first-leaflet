@@ -87,7 +87,7 @@ const Card = ({ details, clickable, handleCardClick, content, rtl }) => {
     </div>
   ) : (
     <>
-      <div className="w-full max-w-m bg-green-400 border-gray-300 rounded-lg overflow-hidden pb-4 border flex flex-col justify-between bg-white">
+      <div className="w-full max-w-m  border-gray-300 rounded-lg overflow-hidden pb-4 border flex flex-col justify-between bg-white">
         {contents}
         <div className={`mt-4 px-4 flex ${rtl ? "self-end" : ""}`}>
           {!rtl && (
