@@ -41,7 +41,7 @@ const GridSquare = ({ area, embed }) => {
         style={{ height: "50%" }}
         className="from-white opacity-50 to-black bg-gradient-to-b bottom-0 absolute z-10"
       />
-      <h2 className="absolute bottom-0 left-0 mx-4 my-4 text-white z-20 font-medium text-xl">
+      <h2 className="absolute bottom-0 left-0 px-4 my-2 py-2 w-full bg-primary text-white z-20 font-medium text-xl">
         {area?.Title}
       </h2>
     </a>
