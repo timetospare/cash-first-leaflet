@@ -83,21 +83,27 @@ const Home = ({ areas, content }) => {
       </Head>
       <div className="w-full mx-auto">
         <div className="max-w-6xl px-2 mx-auto">
-          <h1 className="text-3xl my-6 font-medium">
-            {content.mainTitle[`text-${locale}`] ||
-              content.mainTitle[`text-en`]}
-          </h1>
+          {!embed && (
+            <h1 className="text-3xl my-6 font-medium">
+              {content.mainTitle[`text-${locale}`] ||
+                content.mainTitle[`text-en`]}
+            </h1>
+          )}
+
           <PostcodeLookup handleSearch={(obj) => setPostcodeObj(obj)} />
         </div>
-        <div className="max-w-6xl px-2 mx-auto flex flex-wrap">
-          {countries.map((country) => (
-            <a href={`#${country}`} key={country} className="mr-2 mb-2">
-              <div className="bg-white border-2 text-primary border-primary hover:bg:gray-50 rounded-md hover:shadow-lg px-4 py-2">
-                <h2 className="text-lg font-medium">{country}</h2>
-              </div>
-            </a>
-          ))}
-        </div>
+
+        {!embed && (
+          <div className="max-w-6xl px-2 mx-auto flex flex-wrap">
+            {countries.map((country) => (
+              <a href={`#${country}`} key={country} className="mr-2 mb-2">
+                <div className="bg-white border-2 text-primary border-primary hover:bg:gray-50 rounded-md hover:shadow-lg px-4 py-2">
+                  <h2 className="text-lg font-medium">{country}</h2>
+                </div>
+              </a>
+            ))}
+          </div>
+        )}
 
         {postcodeObj ? (
           <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4 max-w-6xl mx-auto px-2">
