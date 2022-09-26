@@ -53,9 +53,11 @@ const Home = ({ areas, content }) => {
   const { embed } = query;
   const [postcodeObj, setPostcodeObj] = useState(null);
 
+  console.log({ areas });
+
   const filteredAreas = postcodeObj
     ? [
-        areas[0],
+        ...areas.filter((area) => area.Location === "uk-wide"),
         ...areas.filter((area) =>
           area.Title?.replace(new RegExp("&", "g"), "")
             .replace(new RegExp("and", "g"), "")
@@ -70,7 +72,7 @@ const Home = ({ areas, content }) => {
       ]
     : areas;
 
-  const countries = [ "Scotland", "England", "Greater London", "Wales", "UK"];
+  const countries = ["Scotland", "England", "Greater London", "Wales", "UK"];
   const countryAreas = groupArrayByValue(filteredAreas, "Country", countries);
 
   return (
