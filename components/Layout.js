@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 
 const languageNames = {
   en: "English",
+  cy: "Cymraeg/Welsh",
   es: "Spanish",
   fr: "French",
   bn: "Bengali",
