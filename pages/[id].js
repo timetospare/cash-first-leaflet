@@ -222,7 +222,7 @@ const Leaflet = ({ records, step2Options, general, content, links }) => {
               )}
             </h2>
             {Object.keys(relevantLinks).length ? (
-              <div className="md:flex flex-wrap pt-2 hidden ">
+              <div className="md:flex flex-wrap pt-2 ">
                 {Object.keys(relevantLinks).map((key) => (
                   <a
                     target="_blank"
