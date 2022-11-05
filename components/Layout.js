@@ -21,7 +21,7 @@ const languageNames = {
   "zh-CHT": "Chinese (繁體)",
 };
 
-export const Layout = ({ children }) => {
+export const Layout = ({ children, enabledLanguages }) => {
   const router = useRouter();
   const { locales, locale, query } = router;
   const { embed } = query;
@@ -62,11 +62,15 @@ export const Layout = ({ children }) => {
                 name="language"
                 className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
               >
-                {locales.map((key) => (
-                  <option key={key} value={key}>
-                    {languageNames[key]}
-                  </option>
-                ))}
+                {locales
+                  .filter(
+                    (key) => !enabledLanguages || enabledLanguages.includes(key)
+                  )
+                  .map((key) => (
+                    <option key={key} value={key}>
+                      {languageNames[key]}
+                    </option>
+                  ))}
               </select>
             </form>
             <a
