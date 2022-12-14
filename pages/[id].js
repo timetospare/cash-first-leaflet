@@ -15,7 +15,7 @@ import linksAPI from "./api/links";
 import convertLink from "../methods/convertLink";
 import { LinkIcon } from "@heroicons/react/solid";
 
-const rtlLanguages = ["ur", "fa", "ar", "ps"];
+const rtlLanguages = ["ur", "fa", "ar", "ps", "apd", "prs"];
 
 const Leaflet = ({ records, step2Options, general, content, links }) => {
   const { query, locale } = useRouter();
