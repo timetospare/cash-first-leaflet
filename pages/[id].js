@@ -179,7 +179,7 @@ const Leaflet = ({ records, step2Options, general, content, links }) => {
     <>
       <Head>
         <link rel="icon" href="/favicon.png" />
-        <title>{title} - Worried about Money?</title>
+        <title>{title} - Worrying about Money?</title>
         <meta
           name="description"
           content={`Worrying About Money? Advice and support is available in ${title} if you’re struggling to make ends meet`}

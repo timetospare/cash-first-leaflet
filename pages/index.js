@@ -84,10 +84,16 @@ const Home = ({ areas, content }) => {
       <div className="w-full mx-auto">
         <div className="max-w-6xl px-2 mx-auto">
           {!embed && (
-            <h1 className="text-3xl my-6 font-medium">
-              {content.mainTitle[`text-${locale}`] ||
-                content.mainTitle[`text-en`]}
-            </h1>
+            <>
+              <h1 className="text-3xl mt-6 font-medium">
+                {content.mainTitle[`text-${locale}`] ||
+                  content.mainTitle[`text-en`]}
+              </h1>
+              <p className="mt-2 mb-6">
+                Find advice and support to maximise income through local
+                'Worrying About Money?' resources.
+              </p>
+            </>
           )}
 
           <PostcodeLookup handleSearch={(obj) => setPostcodeObj(obj)} />
