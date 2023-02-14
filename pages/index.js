@@ -53,8 +53,6 @@ const Home = ({ areas, content }) => {
   const { embed } = query;
   const [postcodeObj, setPostcodeObj] = useState(null);
 
-  console.log({ areas });
-
   const filteredAreas = postcodeObj
     ? [
         ...areas.filter((area) => area.Location === "uk-wide"),
@@ -156,8 +154,7 @@ export async function getStaticProps() {
 
   return {
     props: {
-      areas:
-        areas.status === "fulfilled" ? areas.value?.map((ar) => ar.fields) : [],
+      areas: areas.status === "fulfilled" ? areas.value : [],
       content:
         content.status === "fulfilled"
           ? content.value?.reduce((obj, item) => {

@@ -7,17 +7,52 @@ const generalAPI = async (view) => {
     endpointUrl: "https://api.airtable.com",
   });
   const airtable = new Airtable();
-  const base = airtable.base("appEay9REblCErAGJ");
+  const BASE_ID = "appEay9REblCErAGJ";
+  // const base = airtable.base("appEay9REblCErAGJ");
 
-  const data = await base("General")
-    .select({
-      // Selecting the first 3 records in Grid view:
-      maxRecords: 100,
-      view,
-    })
-    .all();
+  const records = [];
 
-  return data.map((record) => record._rawJson);
+  const PAGE_SIZE = 100;
+
+  // dont use the api because it's a mess
+
+  try {
+    const response = await fetch(
+      `https://api.airtable.com/v0/${BASE_ID}/General?view=Grid%20view&pageSize=${PAGE_SIZE}`,
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.AIRTABLE_API_KEY}`,
+        },
+      }
+    );
+    const rawData = await response.json();
+    rawData.records.forEach((record) => {
+      records.push(record.fields);
+    });
+
+    const recursiveFetch = async (offset) => {
+      if (!offset) return Promise.resolve(records);
+      const response = await fetch(
+        `https://api.airtable.com/v0/${BASE_ID}/General?view=Grid%20view&offset=${offset}&pageSize=${PAGE_SIZE}`,
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.AIRTABLE_API_KEY}`,
+          },
+        }
+      );
+      const newData = await response.json();
+      newData.records.forEach((record) => {
+        records.push(record.fields);
+      });
+      return recursiveFetch(newData.offset);
+    };
+
+    const data = await recursiveFetch(rawData.offset);
+    return data;
+  } catch (error) {
+    console.log("error", error);
+    return [];
+  }
 };
 
 export default generalAPI;
