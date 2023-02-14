@@ -1,14 +1,5 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import Airtable from "airtable";
-
 const generalAPI = async (view) => {
-  Airtable.configure({
-    apiKey: process.env.AIRTABLE_API_KEY,
-    endpointUrl: "https://api.airtable.com",
-  });
-  const airtable = new Airtable();
   const BASE_ID = "appEay9REblCErAGJ";
-  // const base = airtable.base("appEay9REblCErAGJ");
 
   const records = [];
 
