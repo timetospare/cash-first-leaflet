@@ -8,8 +8,7 @@ function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const { id } = router.query;
   const details =
-    pageProps?.general?.find((item) => item?.fields?.Location === id)?.fields ||
-    {};
+    pageProps?.general?.find((item) => item?.Location === id) || {};
 
   const heading1Values = Object.keys(details).filter((key) =>
     key.includes("Heading1")
