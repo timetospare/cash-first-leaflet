@@ -26,8 +26,7 @@ const Leaflet = ({ records, step2Options, general, content, links }) => {
   const { Name, ...relevantLinks } =
     links?.find((item) => item?.fields?.Name === id)?.fields || {};
 
-  const details =
-    general?.find((item) => item?.fields?.Location === id)?.fields || {};
+  const details = general?.find((item) => item?.Location === id) || {};
 
   const [step1Selected, setStep1Selected] = useState([]);
   const [step2Selected, setStep2Selected] = useState(null);
