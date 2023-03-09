@@ -25,6 +25,7 @@
 const nameToCode = {
   "Albanian (PDF)": "TESXYXUR",
   "Arabic (PDF)": "AJTOTIVN",
+  "Leaflet (PDF)": "3B5PKWPJ",
   "Bengali (PDF)": "YTTVXMEI",
   "Bulgarian (PDF)": "R5OVP6ZX",
   "Chinese (Simplified) (PDF)": "B442VQHX",
