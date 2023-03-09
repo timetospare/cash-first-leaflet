@@ -14,6 +14,7 @@ import ReactMarkdown from "react-markdown";
 import linksAPI from "./api/links";
 import convertLink from "../methods/convertLink";
 import { LinkIcon } from "@heroicons/react/solid";
+import languageToFathomCode from "../models/languageToFathomCode";
 
 const rtlLanguages = ["ur", "fa", "ar", "ps", "apd", "prs"];
 
@@ -225,6 +226,12 @@ const Leaflet = ({ records, step2Options, general, content, links }) => {
                 {Object.keys(relevantLinks).map((key) => (
                   <a
                     target="_blank"
+                    onClick={() => {
+                      // track fathom
+                      if (typeof window !== "undefined" && window.fathom) {
+                        window.fathom?.trackGoal(languageToFathomCode[key], 0);
+                      }
+                    }}
                     href={convertLink(relevantLinks[key])}
                     rel="noopener noreferrer"
                     className="inline-flex items-center mr-2 mb-2 rounded-full font-medium text-md hover:shadow-md bg-secondary text-green-900 py-1.5 px-4"
