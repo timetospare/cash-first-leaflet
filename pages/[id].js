@@ -229,7 +229,8 @@ const Leaflet = ({ records, step2Options, general, content, links }) => {
                     onClick={() => {
                       // track fathom
                       if (typeof window !== "undefined" && window.fathom) {
-                        window.fathom?.trackGoal(languageToFathomCode[key], 0);
+                        console.log("goal", languageToFathomCode[key]);
+                        window.fathom.trackGoal(languageToFathomCode[key], 0);
                       }
                     }}
                     href={convertLink(relevantLinks[key])}
