@@ -24,7 +24,7 @@ function MyApp({ Component, pageProps }) {
     //  - This must be an exact match of your domain.
     //  - If you're using www. for your domain, make sure you include that here.
     Fathom.load("ITTAIZAK", {
-      url: "https://jolene.worryingaboutmoney.co.uk/script.js",
+      url: "https://cdn.usefathom.com/script.js",
       includedDomains: [
         "www.worryingaboutmoney.co.uk",
         "worryingaboutmoney.co.uk",
