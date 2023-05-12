@@ -26,6 +26,7 @@ const languageNames = {
   ua: "Ukrainian",
   zh: "Chinese (简单)",
   "zh-CHT": "Chinese (繁體)",
+  hu: "Hungarian",
 };
 
 export const Layout = ({ children, enabledLanguages }) => {

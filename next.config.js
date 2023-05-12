@@ -27,6 +27,7 @@ module.exports = {
       "ua",
       "zh",
       "zh-CHT",
+      "hu",
     ],
     defaultLocale: "en",
   },
