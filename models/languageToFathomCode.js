@@ -46,6 +46,7 @@ const nameToCode = {
   "Ukrainian (PDF)": "H2NFEUWE",
   "Urdu (PDF)": "YXJC8MCF",
   "Welsh (PDF)": "EMOZUMQI",
+  "Hungarian (PDF)": "",
 };
 
 const codeToCode = {
@@ -71,6 +72,7 @@ const codeToCode = {
   ua: "H2NFEUWE",
   ur: "YXJC8MCF",
   cy: "EMOZUMQI",
+  hu: "",
   en: "",
 };
 
