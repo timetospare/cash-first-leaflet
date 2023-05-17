@@ -46,8 +46,8 @@ const nameToCode = {
   "Ukrainian (PDF)": "H2NFEUWE",
   "Urdu (PDF)": "YXJC8MCF",
   "Welsh (PDF)": "EMOZUMQI",
-  "Hungarian (PDF)": "",
-  "Kurdish Sorani (PDF)": "",
+  "Hungarian (PDF)": "CCKMN43J",
+  "Kurdish Sorani (PDF)": "XOCAJDMK",
 };
 
 const codeToCode = {
@@ -73,9 +73,9 @@ const codeToCode = {
   ua: "H2NFEUWE",
   ur: "YXJC8MCF",
   cy: "EMOZUMQI",
-  hu: "",
+  hu: "CCKMN43J",
   en: "",
-  ckb: "",
+  ckb: "XOCAJDMK",
 };
 
 export default nameToCode;
