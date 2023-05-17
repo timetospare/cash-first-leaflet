@@ -47,6 +47,7 @@ const nameToCode = {
   "Urdu (PDF)": "YXJC8MCF",
   "Welsh (PDF)": "EMOZUMQI",
   "Hungarian (PDF)": "",
+  "Kurdish Sorani (PDF)": "",
 };
 
 const codeToCode = {
@@ -74,6 +75,7 @@ const codeToCode = {
   cy: "EMOZUMQI",
   hu: "",
   en: "",
+  ckb: "",
 };
 
 export default nameToCode;

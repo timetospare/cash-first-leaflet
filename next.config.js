@@ -29,6 +29,7 @@ module.exports = {
       "zh-CHT",
       "hu",
       "ru",
+      "ckb",
     ],
     defaultLocale: "en",
   },

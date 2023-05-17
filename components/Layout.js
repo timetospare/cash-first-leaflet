@@ -28,6 +28,7 @@ const languageNames = {
   "zh-CHT": "Chinese (繁體)",
   hu: "Hungarian",
   ru: "Russian",
+  ckb: "Kurdish Sorani",
 };
 
 export const Layout = ({ children, enabledLanguages }) => {
