@@ -1,6 +1,6 @@
 module.exports = {
   images: {
-    domains: ["uploads.strikinglycdn.com"],
+    domains: ["uploads.strikinglycdn.com", "static.wixstatic.com"],
   },
   i18n: {
     locales: [

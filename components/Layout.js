@@ -20,7 +20,6 @@ const languageNames = {
   ro: "Romanian",
   fa: "Farsi",
   sk: "Slovakian",
-  so: "Somali",
   gd: "Gaelic",
   bg: "Bulgarian",
   ps: "Pashto",

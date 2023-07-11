@@ -25,7 +25,7 @@ const Leaflet = ({ records, step2Options, general, content, links }) => {
   const rtl = rtlLanguages.includes(locale);
 
   const { Name, ...relevantLinks } =
-    links?.find((item) => item?.fields?.Name === id)?.fields || {};
+    links?.find((item) => item?.Name === id) || {};
 
   const details = general?.find((item) => item?.Location === id) || {};
 
