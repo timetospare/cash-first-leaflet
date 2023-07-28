@@ -76,7 +76,7 @@ const codeToCode = {
   hu: "CCKMN43J",
   en: "",
   ckb: "XOCAJDMK",
-  pt: "",
+  pt: "FHFTM213",
 };
 
 export default nameToCode;
