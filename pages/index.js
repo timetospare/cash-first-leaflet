@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { useRouter } from "next/router";
 import PostcodeLookup from "../components/PostcodeLookup";
 import defaultContent from "../models/defaultContent";
@@ -117,7 +117,11 @@ const Home = ({ areas, content }) => {
               embed ? (
                 <GridSquare area={area} embed />
               ) : (
-                <Link href={`/${area?.Location}`} key={area?.Title}>
+                <Link
+                  href={`/${area?.Location}`}
+                  key={area?.Title}
+                  legacyBehavior
+                >
                   <GridSquare area={area} />
                 </Link>
               )
@@ -138,7 +142,11 @@ const Home = ({ areas, content }) => {
                     embed ? (
                       <GridSquare area={area} embed />
                     ) : (
-                      <Link href={`/${area?.Location}`} key={area?.Title}>
+                      <Link
+                        href={`/${area?.Location}`}
+                        key={area?.Title}
+                        legacyBehavior
+                      >
                         <GridSquare area={area} />
                       </Link>
                     )

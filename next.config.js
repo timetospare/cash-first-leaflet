@@ -30,6 +30,7 @@ module.exports = {
       "hu",
       "ru",
       "ckb",
+      "pt",
     ],
     defaultLocale: "en",
   },
