@@ -29,6 +29,7 @@ const languageNames = {
   hu: "Hungarian",
   ru: "Russian",
   ckb: "Kurdish Sorani",
+  pt: "Portuguese",
 };
 
 export const Layout = ({ children, enabledLanguages }) => {
