@@ -309,12 +309,12 @@ const Leaflet = ({ records, step2Options, general, content, links }) => {
               <br />
               With thanks to{" "}
               <a
-                href="https://timetospare.com"
+                href="https://plinth.org.uk"
                 rel="noopener noreferrer"
                 target="_blank"
-                className="font-pacifico mb-2"
+                className="mb-2 underline"
               >
-                Time to Spare
+                Plinth
               </a>
               .
             </div>
