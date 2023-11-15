@@ -70,7 +70,14 @@ const Home = ({ areas, content }) => {
       ]
     : areas;
 
-  const countries = ["Scotland", "England", "Greater London", "Wales", "UK"];
+  const countries = [
+    "Scotland",
+    "England",
+    "Greater London",
+    "Northern Ireland",
+    "Wales",
+    "UK",
+  ];
   const countryAreas = groupArrayByValue(filteredAreas, "Country", countries);
 
   return (
