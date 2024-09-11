@@ -63,8 +63,8 @@ export const Pagination = ({
                   onClick={() => setStep(item)}
                   className={`${
                     step === item
-                      ? "text-gray-800 font-bold underline"
-                      : "text-gray-600"
+                      ? "text-black font-bold underline"
+                      : "text-gray-700"
                   }  whitespace-nowrap`}
                 >
                   {rtl && `${item} `}

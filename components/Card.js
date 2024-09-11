@@ -29,7 +29,7 @@ const Card = ({ details, clickable, handleCardClick, content, rtl }) => {
         {details[`Title-${locale}`] || details.Title}
       </h1>
       <p
-        className={`text-md text-gray-700 mt-2 px-4 ${
+        className={`text-md text-black mt-2 px-4 ${
           rtl ? "text-right" : "text-left"
         }`}
       >
@@ -38,7 +38,7 @@ const Card = ({ details, clickable, handleCardClick, content, rtl }) => {
             // Map `h1` (`# heading`) to use `h2`s.
             a: ({ node, ...props }) => (
               <a
-                className="underline text-primary hover:text-blue-800"
+                className="underline text-black hover:text-blue-800"
                 onClick={(e) => {
                   // e.preventDefault();
                   e.stopPropagation();
@@ -75,9 +75,9 @@ const Card = ({ details, clickable, handleCardClick, content, rtl }) => {
     >
       {contents}
       <button
-        className={` mt-4 ${
+        className={`mt-4 ${
           rtl ? "self-start ml-2" : "self-end mr-2"
-        } border bg-none bg-primary hover:bg-indigo-700 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 text-sm rounded-full px-3 py-2`}
+        } border border-primary bg-white text-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary text-sm rounded-full px-3 py-2`}
         onClick={(e) => {
           e.stopPropagation();
           handleCardClick();
@@ -94,7 +94,7 @@ const Card = ({ details, clickable, handleCardClick, content, rtl }) => {
           {!rtl && (
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="text-gray-700 h-6 w-6"
+              className="text-black h-6 w-6"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -127,7 +127,7 @@ const Card = ({ details, clickable, handleCardClick, content, rtl }) => {
           {rtl && (
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="text-gray-700 h-6 w-6"
+              className="text-black h-6 w-6"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"

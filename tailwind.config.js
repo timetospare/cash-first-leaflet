@@ -6,9 +6,10 @@ module.exports = {
     fontFamily: { pacifico: "Pacifico" },
     extend: {
       colors: {
-        primary: "#7587a7",
-        secondary: "#ccded7",
+        primary: "#3c4c8c",
+        secondary: "#c3cae6",
         ifangreen: "#C3D8D0",
+        bannerText: "#0d1f6e",
       },
     },
   },

@@ -19,16 +19,16 @@ const Checkboxes = ({ options, selected, updateSelected, rtl }) => {
                   aria-describedby="candidates-description"
                   name={opt.id}
                   type="checkbox"
-                  className="focus:ring-indigo-500 h-8 w-8 text-primary border-gray-300 rounded"
+                  className="focus:ring-indigo-500 h-8 w-8 text-black border-gray-300 rounded"
                 />
               </div>
             )}
 
             <div className={`${rtl ? "mr-3" : "ml-3"} text-sm`}>
-              <label htmlFor={opt.id} className="font-medium text-gray-700">
+              <label htmlFor={opt.id} className="font-medium text-black">
                 {opt.title}
               </label>
-              <span id="candidates-description" className="text-gray-500 block">
+              <span id="candidates-description" className="text-black block">
                 <span className="sr-only">{opt.title} </span>
                 <ul style={{ direction: rtl ? "rtl" : "ltr" }}>
                   {opt.details?.map((deet) => (
@@ -48,7 +48,7 @@ const Checkboxes = ({ options, selected, updateSelected, rtl }) => {
                   aria-describedby="candidates-description"
                   name={opt.id}
                   type="checkbox"
-                  className="focus:ring-indigo-500 h-8 w-8 text-primary border-gray-300 rounded"
+                  className="focus:ring-indigo-500 h-8 w-8 text-black border-gray-300 rounded"
                 />
               </div>
             )}

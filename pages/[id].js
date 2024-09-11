@@ -257,7 +257,7 @@ const Leaflet = ({ records, step2Options, general, content, links }) => {
                 // Map `h1` (`# heading`) to use `h2`s.
                 a: ({ node, ...props }) => (
                   <a
-                    className="underline text-primary hover:text-blue-800"
+                    className="underline text-black hover:text-blue-800"
                     onClick={(e) => {
                       // e.preventDefault();
                       e.stopPropagation();
