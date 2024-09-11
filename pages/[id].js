@@ -14,7 +14,9 @@ import ReactMarkdown from "react-markdown";
 import linksAPI from "./api/links";
 import convertLink from "../methods/convertLink";
 import { LinkIcon } from "@heroicons/react/solid";
+import { Switch } from "@headlessui/react";
 import languageToFathomCode from "../models/languageToFathomCode";
+import YoutubeEmbed from "../components/YoutubeEmbed";
 
 const rtlLanguages = ["ur", "fa", "ar", "ps", "apd", "prs"];
 
@@ -31,6 +33,7 @@ const Leaflet = ({ records, step2Options, general, content, links }) => {
 
   const [step1Selected, setStep1Selected] = useState([]);
   const [step2Selected, setStep2Selected] = useState(null);
+  const [showBSL, setShowBSL] = useState(false);
 
   const [step, setStep] = useState(1);
 
@@ -50,6 +53,7 @@ const Leaflet = ({ records, step2Options, general, content, links }) => {
             .replace(/- /g, "")
             .split("\n")
             .filter((item) => item),
+          bsl: deets[`details-bsl`],
         });
         i += 1;
       } else {
@@ -75,8 +79,15 @@ const Leaflet = ({ records, step2Options, general, content, links }) => {
               {content.step1Subheading[`text-${locale}`] ||
                 content.step1Subheading[`text-en`]}
             </h2>
+            {showBSL && details["Heading1-bsl"] && (
+              <div className="mb-4">
+                <YoutubeEmbed videoId={content.step1Heading["details-bsl"]} />
+              </div>
+            )}
+
             <Checkboxes
               rtl={rtl}
+              showBSL={showBSL}
               options={generateCheckboxOptions()}
               selected={step1Selected}
               updateSelected={(id, value) =>
@@ -102,6 +113,11 @@ const Leaflet = ({ records, step2Options, general, content, links }) => {
               {content.step2Subheading[`text-${locale}`] ||
                 content.step2Subheading[`text-en`]}
             </h2>
+            {showBSL && details["Heading2-bsl"] && (
+              <div className="mb-4">
+                <YoutubeEmbed videoId={content.step2Heading["details-bsl"]} />
+              </div>
+            )}
             <div className="space-y-4 mt-4">
               {step2Options
                 .filter((item) =>
@@ -111,6 +127,7 @@ const Leaflet = ({ records, step2Options, general, content, links }) => {
                 )
                 .map((item) => (
                   <Card
+                    showBSL={showBSL}
                     rtl={rtl}
                     content={content}
                     key={item.id}
@@ -138,12 +155,18 @@ const Leaflet = ({ records, step2Options, general, content, links }) => {
               {content.step3Subheading[`text-${locale}`] ||
                 content.step3Subheading[`text-en`]}
             </h2>
+            {showBSL && details["Heading3-bsl"] && (
+              <div className="mb-4">
+                <YoutubeEmbed videoId={content.step3Heading["details-bsl"]} />
+              </div>
+            )}
             <div className="space-y-4 mt-4">
               {records
                 .filter((item) => item.fields?.Option2?.includes(step2Selected))
                 .map((item) => (
                   <Card
                     rtl={rtl}
+                    showBSL={showBSL}
                     content={content}
                     key={item.id}
                     details={item.fields}
@@ -159,6 +182,7 @@ const Leaflet = ({ records, step2Options, general, content, links }) => {
                 .filter((item) => item.fields?.Option2?.includes("Other"))
                 .map((item) => (
                   <Card
+                    showBSL={showBSL}
                     rtl={rtl}
                     content={content}
                     key={item.id}
@@ -175,6 +199,31 @@ const Leaflet = ({ records, step2Options, general, content, links }) => {
 
   const title = details?.[`Title-${locale}`] || details?.["Title"];
 
+  const renderBSLSwitch = () => {
+    if (!details["Heading1-bsl"]) return null;
+
+    return (
+      <div className="flex items-center justify-end mb-4">
+        <Switch.Group>
+          <Switch.Label className="mr-4">Show BSL sign language</Switch.Label>
+          <Switch
+            checked={showBSL}
+            onChange={setShowBSL}
+            className={`${
+              showBSL ? "bg-blue-600" : "bg-gray-200"
+            } relative inline-flex items-center h-6 rounded-full w-11`}
+          >
+            <span
+              className={`${
+                showBSL ? "translate-x-6" : "translate-x-1"
+              } inline-block w-4 h-4 transform bg-white rounded-full`}
+            />
+          </Switch>
+        </Switch.Group>
+      </div>
+    );
+  };
+
   return (
     <>
       <Head>
@@ -182,7 +231,7 @@ const Leaflet = ({ records, step2Options, general, content, links }) => {
         <title>{title} - Worrying about Money?</title>
         <meta
           name="description"
-          content={`Worrying About Money? Advice and support is available in ${title} if you’re struggling to make ends meet`}
+          content={`Worrying About Money? Advice and support is available in ${title} if you're struggling to make ends meet`}
         />
         <meta
           property="og:url"
@@ -191,7 +240,7 @@ const Leaflet = ({ records, step2Options, general, content, links }) => {
         <meta property="og:title" content={`${title} - Worried about Money?`} />
         <meta
           property="og:description"
-          content={`Worrying About Money? Advice and support is available in ${title} if you’re struggling to make ends meet`}
+          content={`Worrying About Money? Advice and support is available in ${title} if you're struggling to make ends meet`}
         />
         <meta
           property="twitter:title"
@@ -213,14 +262,27 @@ const Leaflet = ({ records, step2Options, general, content, links }) => {
             <h1 className="text-3xl font-medium pt-4 pb-2">
               {details[`Heading1-${locale}`] || details[`Heading1`]}
             </h1>
+            {showBSL && details["Heading1-bsl"] && (
+              <div className="mb-4">
+                <YoutubeEmbed videoId={details["Heading1-bsl"]} />
+              </div>
+            )}
             <h2 className="text-lg font-light  mb-2">
               {details[`Heading2-${locale}`] || details[`Heading2`] || (
                 <>
-                  Advice and support is available in {details?.Title} if you’re
+                  Advice and support is available in {details?.Title} if you're
                   struggling to make ends meet
                 </>
               )}
             </h2>
+            {showBSL && details["Heading2-bsl"] && (
+              <div className="mb-4">
+                <YoutubeEmbed videoId={details["Heading2-bsl"]} />
+              </div>
+            )}
+
+            {renderBSLSwitch()}
+
             {Object.keys(relevantLinks).length ? (
               <div className="md:flex flex-wrap pt-2 ">
                 {Object.keys(relevantLinks).map((key) => (
@@ -257,7 +319,7 @@ const Leaflet = ({ records, step2Options, general, content, links }) => {
                 // Map `h1` (`# heading`) to use `h2`s.
                 a: ({ node, ...props }) => (
                   <a
-                    className="underline text-primary hover:text-blue-800"
+                    className="underline text-black hover:text-blue-800"
                     onClick={(e) => {
                       // e.preventDefault();
                       e.stopPropagation();

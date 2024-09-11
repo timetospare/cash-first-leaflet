@@ -1,4 +1,6 @@
-const Checkboxes = ({ options, selected, updateSelected, rtl }) => {
+import YoutubeEmbed from "./YoutubeEmbed";
+
+const Checkboxes = ({ options, selected, updateSelected, rtl, showBSL }) => {
   return (
     <form>
       <fieldset className="space-y-8 ">
@@ -19,16 +21,16 @@ const Checkboxes = ({ options, selected, updateSelected, rtl }) => {
                   aria-describedby="candidates-description"
                   name={opt.id}
                   type="checkbox"
-                  className="focus:ring-indigo-500 h-8 w-8 text-primary border-gray-300 rounded"
+                  className="focus:ring-indigo-500 h-8 w-8 text-black border-gray-300 rounded"
                 />
               </div>
             )}
 
-            <div className={`${rtl ? "mr-3" : "ml-3"} text-sm`}>
-              <label htmlFor={opt.id} className="font-medium text-gray-700">
+            <div className={`${rtl ? "mr-3" : "ml-3"} text-sm w-full`}>
+              <label htmlFor={opt.id} className="font-medium text-black">
                 {opt.title}
               </label>
-              <span id="candidates-description" className="text-gray-500 block">
+              <span id="candidates-description" className="text-black block">
                 <span className="sr-only">{opt.title} </span>
                 <ul style={{ direction: rtl ? "rtl" : "ltr" }}>
                   {opt.details?.map((deet) => (
@@ -38,6 +40,9 @@ const Checkboxes = ({ options, selected, updateSelected, rtl }) => {
                   ))}
                 </ul>
               </span>
+              {opt.bsl && showBSL && (
+                <YoutubeEmbed key={opt.id} videoId={opt.bsl} />
+              )}
             </div>
             {rtl && (
               <div className="flex items-center h-5">
@@ -48,7 +53,7 @@ const Checkboxes = ({ options, selected, updateSelected, rtl }) => {
                   aria-describedby="candidates-description"
                   name={opt.id}
                   type="checkbox"
-                  className="focus:ring-indigo-500 h-8 w-8 text-primary border-gray-300 rounded"
+                  className="focus:ring-indigo-500 h-8 w-8 text-black border-gray-300 rounded"
                 />
               </div>
             )}
