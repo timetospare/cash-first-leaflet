@@ -1,4 +1,6 @@
-const Checkboxes = ({ options, selected, updateSelected, rtl }) => {
+import YoutubeEmbed from "./YoutubeEmbed";
+
+const Checkboxes = ({ options, selected, updateSelected, rtl, showBSL }) => {
   return (
     <form>
       <fieldset className="space-y-8 ">
@@ -24,7 +26,7 @@ const Checkboxes = ({ options, selected, updateSelected, rtl }) => {
               </div>
             )}
 
-            <div className={`${rtl ? "mr-3" : "ml-3"} text-sm`}>
+            <div className={`${rtl ? "mr-3" : "ml-3"} text-sm w-full`}>
               <label htmlFor={opt.id} className="font-medium text-black">
                 {opt.title}
               </label>
@@ -38,6 +40,9 @@ const Checkboxes = ({ options, selected, updateSelected, rtl }) => {
                   ))}
                 </ul>
               </span>
+              {opt.bsl && showBSL && (
+                <YoutubeEmbed key={opt.id} videoId={opt.bsl} />
+              )}
             </div>
             {rtl && (
               <div className="flex items-center h-5">

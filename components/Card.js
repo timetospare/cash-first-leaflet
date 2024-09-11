@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import ReactMarkdown from "react-markdown";
+import YoutubeEmbed from "./YoutubeEmbed";
 
 const formatUrl = (url) => {
   if (!url) {
@@ -12,7 +13,14 @@ const formatUrl = (url) => {
   }
 };
 
-const Card = ({ details, clickable, handleCardClick, content, rtl }) => {
+const Card = ({
+  details,
+  clickable,
+  handleCardClick,
+  content,
+  rtl,
+  showBSL,
+}) => {
   const { locale } = useRouter();
 
   const websitesArr = details.Links?.split(",");
@@ -74,6 +82,11 @@ const Card = ({ details, clickable, handleCardClick, content, rtl }) => {
       className=" w-full max-w-m  border-gray-300 rounded-lg overflow-hidden pb-4 border flex flex-col justify-between"
     >
       {contents}
+      {showBSL && details["Title-bsl"] && (
+        <div className="px-4" key="youtube">
+          <YoutubeEmbed videoId={details["Title-bsl"]} />
+        </div>
+      )}
       <button
         className={`mt-4 ${
           rtl ? "self-start ml-2" : "self-end mr-2"
@@ -90,6 +103,11 @@ const Card = ({ details, clickable, handleCardClick, content, rtl }) => {
     <>
       <div className="w-full max-w-m  border-gray-300 rounded-lg overflow-hidden pb-4 border flex flex-col justify-between bg-white">
         {contents}
+        {showBSL && details["Title-bsl"] && (
+          <div key="youtube" className="px-4">
+            <YoutubeEmbed videoId={details["Title-bsl"]} />
+          </div>
+        )}
         <div className={`mt-4 px-4 flex ${rtl ? "self-end" : ""}`}>
           {!rtl && (
             <svg
