@@ -6,7 +6,7 @@ const opts = {
   width: "100%",
   // autoplay on loop
   playerVars: {
-    autoplay: 1,
+    // autoplay: 1,
     loop: 1,
   },
 };
