@@ -262,7 +262,7 @@ const Leaflet = ({ records, step2Options, general, content, links }) => {
             <h1 className="text-3xl font-medium pt-4 pb-2">
               {details[`Heading1-${locale}`] || details[`Heading1`]}
             </h1>
-            {showBSL && details["Heading1-bsl"] && (
+            {showBSL && step === 1 && details["Heading1-bsl"] && (
               <div className="mb-4">
                 <YoutubeEmbed videoId={details["Heading1-bsl"]} />
               </div>
@@ -275,7 +275,7 @@ const Leaflet = ({ records, step2Options, general, content, links }) => {
                 </>
               )}
             </h2>
-            {showBSL && details["Heading2-bsl"] && (
+            {showBSL && step === 1 && details["Heading2-bsl"] && (
               <div className="mb-4">
                 <YoutubeEmbed videoId={details["Heading2-bsl"]} />
               </div>
@@ -283,7 +283,7 @@ const Leaflet = ({ records, step2Options, general, content, links }) => {
 
             {renderBSLSwitch()}
 
-            {Object.keys(relevantLinks).length ? (
+            {!showBSL && Object.keys(relevantLinks).length ? (
               <div className="md:flex flex-wrap pt-2 ">
                 {Object.keys(relevantLinks).map((key) => (
                   <a
