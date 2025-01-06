@@ -297,7 +297,7 @@ const Leaflet = ({ records, step2Options, general, content, links }) => {
                     }}
                     href={convertLink(relevantLinks[key])}
                     rel="noopener noreferrer"
-                    className="inline-flex items-center mr-2 mb-2 rounded-full font-medium text-md hover:shadow-md bg-secondary text-green-900 py-1.5 px-4"
+                    className="inline-flex items-center mr-2 mb-2 rounded-full font-medium text-md hover:shadow-md bg-secondary text-primary py-1.5 px-4"
                   >
                     <LinkIcon className="h-4 w-4 mr-2" />
                     {key}
