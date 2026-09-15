@@ -1,6 +1,9 @@
 module.exports = {
-  images: {
-    domains: ["uploads.strikinglycdn.com", "static.wixstatic.com"],
+  images: { 
+    remotePatterns: [
+      { protocol: "https", hostname: "uploads.strikinglycdn.com" },
+      { protocol: "https", hostname: "static.wixstatic.com" },
+    ],
   },
   i18n: {
     locales: [

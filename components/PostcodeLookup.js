@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
 import { CheckIcon, SearchIcon } from "@heroicons/react/solid";
-import { Combobox } from "@headlessui/react";
+import {
+  Combobox,
+  ComboboxButton,
+  ComboboxInput,
+  ComboboxOption,
+  ComboboxOptions,
+  Label,
+} from "@headlessui/react";
 import fetchSuggestedPostcodes from "../methods/fetchPostcodes";
 
 const people = [
@@ -31,7 +38,9 @@ export default function PostcodeLookup({ handleSearch }) {
     if (query) {
       fetchSuggestedPostcodes({ searchText: query })
         .then((data) => {
-          setPostcodes(data);
+          // The upstream API can resolve to null (e.g. it rejects the query),
+          // and rendering below calls .filter on this.
+          setPostcodes(data || []);
         })
         .catch((err) => {
           //swallow error
@@ -43,8 +52,8 @@ export default function PostcodeLookup({ handleSearch }) {
 
   const filteredPeople =
     query === ""
-      ? postcodes
-      : postcodes.filter((result) => {
+      ? postcodes ?? []
+      : (postcodes ?? []).filter((result) => {
           return result.id.toLowerCase().includes(query.toLowerCase());
         });
 
@@ -55,33 +64,36 @@ export default function PostcodeLookup({ handleSearch }) {
       onChange={setSelected}
       className="mb-8 max-w-sm"
     >
-      <Combobox.Label className="block text-sm font-medium text-gray-700">
+      <Label className="block text-sm font-medium text-gray-700">
         Postcode Search
-      </Combobox.Label>
+      </Label>
       <div className="relative mt-1">
-        <Combobox.Input
+        <ComboboxInput
           className="w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
           onChange={(event) => setQuery(event.target.value)}
           displayValue={(person) => person?.id || ""}
         />
-        <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
+        <ComboboxButton className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
           <SearchIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-        </Combobox.Button>
+        </ComboboxButton>
 
         {filteredPeople.length > 0 && (
-          <Combobox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+          <ComboboxOptions
+            modal={false}
+            className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+          >
             {filteredPeople.map((person) => (
-              <Combobox.Option
+              <ComboboxOption
                 key={person.id}
                 value={person}
-                className={({ active }) =>
+                className={({ focus }) =>
                   classNames(
                     "relative cursor-default select-none py-2 pl-3 pr-9",
-                    active ? "bg-indigo-600 text-white" : "text-gray-900"
+                    focus ? "bg-indigo-600 text-white" : "text-gray-900"
                   )
                 }
               >
-                {({ active, selected }) => (
+                {({ focus, selected }) => (
                   <>
                     <span
                       className={classNames(
@@ -96,7 +108,7 @@ export default function PostcodeLookup({ handleSearch }) {
                       <span
                         className={classNames(
                           "absolute inset-y-0 right-0 flex items-center pr-4",
-                          active ? "text-white" : "text-indigo-600"
+                          focus ? "text-white" : "text-indigo-600"
                         )}
                       >
                         <CheckIcon className="h-5 w-5" aria-hidden="true" />
@@ -104,9 +116,9 @@ export default function PostcodeLookup({ handleSearch }) {
                     )}
                   </>
                 )}
-              </Combobox.Option>
+              </ComboboxOption>
             ))}
-          </Combobox.Options>
+          </ComboboxOptions>
         )}
       </div>
     </Combobox>

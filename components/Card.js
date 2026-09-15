@@ -36,7 +36,7 @@ const Card = ({
       >
         {details[`Title-${locale}`] || details.Title}
       </h1>
-      <p
+      <div
         className={`text-md text-black mt-2 px-4 ${
           rtl ? "text-right" : "text-left"
         }`}
@@ -71,7 +71,7 @@ const Card = ({
             }
           `}
         </style>
-      </p>
+      </div>
     </>
   );
 

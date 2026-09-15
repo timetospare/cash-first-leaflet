@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import Link from "next/link";
 import Image from "next/legacy/image";
 import { useRouter } from "next/router";
@@ -122,7 +122,7 @@ const Home = ({ areas, content }) => {
           <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4 max-w-6xl mx-auto px-2">
             {filteredAreas.map((area) =>
               embed ? (
-                <GridSquare area={area} embed />
+                <GridSquare key={area?.Title} area={area} embed />
               ) : (
                 <Link
                   href={`/${area?.Location}`}
@@ -137,7 +137,7 @@ const Home = ({ areas, content }) => {
         ) : (
           <div>
             {countries.map((country) => (
-              <>
+              <Fragment key={country}>
                 <h1
                   id={country}
                   className="bg-gray-50 border-t border-b border-gray-300 text-xl font-medium py-4 my-4"
@@ -147,7 +147,7 @@ const Home = ({ areas, content }) => {
                 <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4 max-w-6xl mx-auto px-2">
                   {countryAreas[country].map((area) =>
                     embed ? (
-                      <GridSquare area={area} embed />
+                      <GridSquare key={area?.Title} area={area} embed />
                     ) : (
                       <Link
                         href={`/${area?.Location}`}
@@ -159,7 +159,7 @@ const Home = ({ areas, content }) => {
                     )
                   )}
                 </div>
-              </>
+              </Fragment>
             ))}
           </div>
         )}

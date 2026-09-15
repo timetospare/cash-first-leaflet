@@ -6,14 +6,14 @@
     "start": "next start"
   },
   "dependencies": {
-    "@headlessui/react": "^1.5.0",
+    "@headlessui/react": "^2.2.10",
     "@heroicons/react": "^1.0.6",
     "@tailwindcss/forms": "^0.3.3",
     "airtable": "^0.11.1",
     "fathom-client": "^3.5.0",
-    "next": "^13.4.12",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "next": "15.5.25",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
     "react-markdown": "^8.0.3",
     "react-youtube": "^10.1.0"
   },
