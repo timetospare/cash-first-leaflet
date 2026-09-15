@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useState, useEffect, useContext, useRef } from "react";
+import { Fragment, useState, useEffect, useContext, useRef } from "react";
 
 export const Pagination = ({
   children,
@@ -58,7 +58,7 @@ export const Pagination = ({
           {header}
           <div className="w-full flex flex-row justify-center border-t border-b items-center text-white space-x-6 p-2 md:p-4 mb-8 mt-4">
             {numbers.map((item, i) => (
-              <>
+              <Fragment key={item}>
                 <button
                   onClick={() => setStep(item)}
                   className={`${
@@ -90,7 +90,7 @@ export const Pagination = ({
                     />
                   </svg>
                 )}
-              </>
+              </Fragment>
             ))}
           </div>
           {children}

@@ -14,7 +14,7 @@ import ReactMarkdown from "react-markdown";
 import linksAPI from "./api/links";
 import convertLink from "../methods/convertLink";
 import { LinkIcon } from "@heroicons/react/solid";
-import { Switch } from "@headlessui/react";
+import { Label, Switch, SwitchGroup } from "@headlessui/react";
 import languageToFathomCode from "../models/languageToFathomCode";
 import YoutubeEmbed from "../components/YoutubeEmbed";
 
@@ -204,8 +204,8 @@ const Leaflet = ({ records, step2Options, general, content, links }) => {
 
     return (
       <div className="flex items-center justify-end mb-4">
-        <Switch.Group>
-          <Switch.Label className="mr-4">Show BSL sign language</Switch.Label>
+        <SwitchGroup>
+          <Label className="mr-4">Show BSL sign language</Label>
           <Switch
             checked={showBSL}
             onChange={setShowBSL}
@@ -219,7 +219,7 @@ const Leaflet = ({ records, step2Options, general, content, links }) => {
               } inline-block w-4 h-4 transform bg-white rounded-full`}
             />
           </Switch>
-        </Switch.Group>
+        </SwitchGroup>
       </div>
     );
   };
@@ -287,6 +287,7 @@ const Leaflet = ({ records, step2Options, general, content, links }) => {
               <div className="md:flex flex-wrap pt-2 ">
                 {Object.keys(relevantLinks).map((key) => (
                   <a
+                    key={key}
                     target="_blank"
                     onClick={() => {
                       // track fathom
